@@ -4,7 +4,7 @@ const UserSchema= new mongoose.Schema({
     // _id: Schema.Types.ObjectId, 
     name: String,
     email: String, 
-    profilePicture: Text, 
+    profilePicture: String, 
     passwordDigest: String, 
 
     createdAt: {
@@ -14,8 +14,8 @@ const UserSchema= new mongoose.Schema({
 
     // User address information
     address: {
-        street: Text, 
-        postCode: Number, 
+        street: String, 
+        postCode: String, 
         country: String, 
     }, 
    
@@ -34,6 +34,7 @@ const UserSchema= new mongoose.Schema({
     },
 
     //  Adding Group to create the assoication
+
     groups: [
         {
            group:
@@ -80,5 +81,10 @@ const UserSchema= new mongoose.Schema({
 
 
 }); // User Schema()
+
+// UserSchema.hasMany('Group');
+// UserSchema.hasMany('GroupDebt');
+// UserSchema.hasMany('UserDebt');
+// UserSchema.hasMany('Payment');
 
 module.exports = mongoose.model('User', UserSchema)

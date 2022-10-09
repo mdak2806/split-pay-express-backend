@@ -5,8 +5,8 @@ const UserDebtSchema = new mongoose.Schema({
     // _id: Schema.Types.ObjectId, 
 
     totalAmount: Number, 
-    description: Text, 
-    receipt: Text, 
+    description: String, 
+    receipt: String, 
     // object to store the category
     category_id: [{
         category:{
@@ -32,5 +32,8 @@ const UserDebtSchema = new mongoose.Schema({
 
 
 }); // Schema()
+
+// UserDebtSchema.hasMany('User'),
+// UserDebtSchema.belongsTo('Payment'),
 
 module.exports = mongoose.model('UserDebt', UserDebtSchema )

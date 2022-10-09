@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const GroupSchema = new mongoose.Schema({
     // _id: Schema.Types.ObjectId, 
     groupName: String, 
-    description: Text, 
+    description: String, 
     numberUsers: Number, 
     users: [ 
         {
@@ -27,5 +27,9 @@ const GroupSchema = new mongoose.Schema({
     ]
 
 });
+
+// GroupSchema.hasMany('User'),
+// GroupSchema.hasMany('GroupDebt'),
+// GroupSchema.hasMany('Payment'),
 
 module.exports = mongoose.model('Group', GroupSchema)

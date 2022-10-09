@@ -21,9 +21,13 @@ app.listen(PORT, () => {
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Category = require('./models/Category');
+const Payment = require('./models/Payment');
+const UserDebt= require('./models/UserDebt');
+const GroupDebt = require('./models/GroupDebt');
 const Group = require('./models/Group');
 
-mongoose.connect('mongodb://127.0.0.1/ba');
+
+mongoose.connect('mongodb://127.0.0.1/split_pay');
 const db = mongoose.connection;
 
 db.on('error', err => {
@@ -52,6 +56,25 @@ app.get('/', (req, res) => {
         res.status(422).json({error: 'Db connection error'})
     }
   }); // Get/Users
+
+  // Show Page Users
+
+  app.get('/users/:id', async(req, res) => {
+
+    try{
+        const user = await User.findOne({
+            _id: req.params.id
+        });
+
+        console.log('user', user);
+        res.send({ user})
+
+    } catch(err){
+        console.log('Error finding User by ID:', req.params, err);
+        res.sendStatus( 422 );
+    }
+
+  });
 
 
 //   Index Categories
@@ -89,6 +112,8 @@ app.get('/', (req, res) => {
 
 // Index groupDebts
 // TODO: Show page for User Debts
+
+
 // TODO: EDIT page
 // TODO: Delete page - once posted/ complete
 

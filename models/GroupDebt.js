@@ -3,8 +3,8 @@ const  mongoose = require('mongoose');
 const GroupDebtSchema = new mongoose.Schema({
     // _id: Schema.Types.ObjectId, 
     totalAmount: Number, 
-    description: Text, 
-    receipt: Text, 
+    description: String, 
+    receipt: String, 
 
     // object to store the category
     category_id: [{
@@ -42,5 +42,9 @@ const GroupDebtSchema = new mongoose.Schema({
    
 
 }); // Schema()
+
+// GroupDebtSchema.hasMany('User');
+// GroupDebtSchema.belongsTo('Group');
+// GroupDebtSchema.hasMany('Payment');
 
 module.exports = mongoose.model('Debt', GroupDebtSchema)

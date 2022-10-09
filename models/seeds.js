@@ -40,24 +40,51 @@ db.once('open', async () => {
 
             address: {
                 street: '80 Station St',
-                postCode: 2200, 
+                postCode: '2200', 
                 Country: 'Australia'
             }, 
 
             bankAcount: {
                 accountName: 'Mohamad',
-                bsb: 002333, 
-                accountNumber: 223848,
+                bsb: '002333', 
+                accountNumber: '223848',
             },
 
             creditCard: {
                 // 
-                cardNumber: 3333444455556666, 
+                cardNumber: '3333444455556666', 
                 // Date object Departure Date
                 expiryDate: `11/22`, 
-                securityNumber: 222
+                securityNumber: '222'
 
-            }
+            }, 
+            groups: [
+                {
+                    group: createdGroups[0]
+                },
+                {
+                    group: createdGroups[1]   
+                }
+            ], 
+            groupDebts: [
+                {
+                    groupDebt: createdGroupDebts[0]
+                },
+                {
+                    groupDebt: createdGroupDebts[1]
+                },
+            ],
+            payments: [
+                {
+                    payment: createdPayments[0]
+                },
+                {
+                    payment: createdPayments[1]
+                },
+                {
+                    payment: createdPayments[3]
+                },
+            ]
         }, 
 
         {
@@ -67,22 +94,51 @@ db.once('open', async () => {
 
             address: {
                 street: '34 Station St',
-                postCode: 2200, 
+                postCode: '2200', 
                 Country: 'Australia'
             }, 
 
             bankAcount: {
                 accountName: 'Wen',
-                bsb: 002311, 
-                accountNumber: 223811,
+                bsb: '002311', 
+                accountNumber: '223811',
             },
 
             creditCard: {
-                cardNumber: 3333444455551111, 
+                cardNumber: '3333444455551111', 
                 expiryDate: `11/22`, 
-                securityNumber: 111,
+                securityNumber: '111',
 
-            }
+            },
+            groups: [
+                {
+                    group: createdGroups[0]
+                },
+                {
+                    group: createdGroups[2]   
+                }
+            ], 
+            groupDebts: [
+                {
+                    groupDebt: createdGroupDebts[0]
+                },
+                {
+                    groupDebt: createdGroupDebts[2]
+                },
+            ],
+            userDebts: [
+                {
+                    userDebt: createdUserDebts[0]
+                }
+            ],
+            payments: [
+                {
+                    payment: createdPayments[0]
+                },
+                {
+                    payment: createdPayments[3]
+                },
+            ]
         }, 
         {
             name: 'Craig', 
@@ -91,22 +147,49 @@ db.once('open', async () => {
 
             address: {
                 street: '90 Station St',
-                postCode: 2200, 
+                postCode: '2200', 
                 Country: 'Australia'
             }, 
 
             bankAcount: {
                 accountName: 'Craig',
-                bsb: 002322, 
-                accountNumber: 223822,
+                bsb: '002322', 
+                accountNumber: '223822',
             },
 
             creditCard: {
-                cardNumber: 3333444455552222, 
+                cardNumber: '3333444455552222', 
                 expiryDate: `12/22`, 
-                securityNumber: 222,
+                securityNumber: '222',
 
-            }
+            },
+            groups: [
+                {
+                    group: createdGroups[0]
+                },
+                {
+                    group: createdGroups[1]   
+                },
+                {
+                    group: createdGroups[2]   
+                }
+            ], 
+            groupDebts: [
+                {
+                    groupDebt: createdGroupDebts[0]
+                },
+                {
+                    groupDebt: createdGroupDebts[1]
+                },
+                {
+                    groupDebt: createdGroupDebts[2]
+                },
+            ],
+            payments: [
+                {
+                    payment: createdPayments[3]
+                },
+            ]
         }, 
         {
             name: 'Kris', 
@@ -115,28 +198,100 @@ db.once('open', async () => {
 
             address: {
                 street: '30 Station St',
-                postCode: 2200, 
+                postCode: '2200', 
                 Country: 'Australia'
             }, 
 
             bankAcount: {
                 accountName: 'Kris',
                 // Store bsb and Account as a string
-                bsb: 002300, 
-                accountNumber: 223800,
+                bsb: '002300', 
+                accountNumber: '223800',
             },
 
             creditCard: {
                 // 
-                cardNumber: 3333444455550000, 
+                cardNumber: '3333444455550000', 
                 expiryDate: `12/22`, 
-                securityNumber: 000,
+                securityNumber: '000',
 
-            }
-        }, 
+            },
+            groups: [
+                {
+                    group: createdGroups[1]
+                },
+                {
+                    group: createdGroups[2]   
+                },
+            ], 
+            groupDebts: [
+                {
+                    groupDebt: createdGroupDebts[1]
+                },
+                {
+                    groupDebt: createdGroupDebts[2]
+                },
+            ],
+            payments: [
+                {
+                    payment: createdPayments[2]
+                },
+            ]
+        },
+        {
+            name: 'Luke', 
+            email: 'luke@gmail.com',
+            passwordDigest: 'chicken',
+
+            address: {
+                street: '2 Station St',
+                postCode: '2200', 
+                Country: 'Australia'
+            }, 
+
+            bankAcount: {
+                accountName: 'Luke',
+                // Store bsb and Account as a string
+                bsb: '002311', 
+                accountNumber: '223811',
+            },
+
+            creditCard: {
+                // 
+                cardNumber: '3333444455550001', 
+                expiryDate: `12/22`, 
+                securityNumber: '001',
+
+            },
+            groups: [
+                {
+                    group: createdGroups[1]
+                },
+                {
+                    group: createdGroups[2]   
+                },
+            ], 
+            groupDebts: [
+                {
+                    groupDebt: createdGroupDebts[1]
+                },
+                {
+                    groupDebt: createdGroupDebts[2]
+                },
+            ],
+            userDebts: [
+                {
+                    userDebt: createdUserDebts[0]
+                }
+            ],
+            payments: [
+                {
+                    payment: createdPayments[3]
+                },
+            ]
+        },
 
 
-        console.log('Users:', createdUsers),
 
         
 
@@ -144,6 +299,8 @@ db.once('open', async () => {
 
 
     ]);
+    console.log('Users:', createdUsers)
+
 
         // 2. Categories
 
@@ -193,6 +350,8 @@ db.once('open', async () => {
 
         ]);
 
+     console.log('Categories:', createdCaregories)
+
     // 3. Groups
         // ActiveRecord: Delete Categories
         await Group.deleteMany();
@@ -205,6 +364,8 @@ db.once('open', async () => {
                 description: 'House share bills with roommates',
                 numberUsers: 3,
                 users: [
+                    // createdUsers[0], createdUsers[1], createdUsers[2]
+
                     {
                         user: createdUsers[0],
                     },
@@ -257,6 +418,8 @@ db.once('open', async () => {
             }, 
 
         ]);
+
+        console.log('createdGroups:', createdGroups)
 
     // Debt
 
@@ -362,6 +525,7 @@ db.once('open', async () => {
 
         ]);
 
+        console.log('createdGroupDebts:', createdGroupDebts);
 
         // Individual User to User Debt
         await UserDebt.deleteMany();
@@ -390,7 +554,9 @@ db.once('open', async () => {
             }, 
         
 
-        ])
+        ]);
+
+        console.log('createdUserDebts', createdUserDebts);
 
 
         // Payment
@@ -477,5 +643,6 @@ db.once('open', async () => {
 
         ]);
 
+        console.log('createdPayments:', createdPayments)
     process.exit(0) // stay on program
 });
