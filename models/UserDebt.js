@@ -33,6 +33,26 @@ const UserDebtSchema = new mongoose.Schema({
 
 }); // Schema()
 
+
+UserDebtSchema.methods.savePayee = async function( user ){
+    this.payee.push({user: user});
+    await this.save();
+
+    Payment.payee_id.push({user: this});
+    await Payment.save();
+
+    return this;
+},
+
+UserDebtSchema.methods.savePayer = async function( user ){
+    this.payeer.push({user: user});
+    await this.save();
+
+    Payment.payer_id.push({user: this});
+    await Payment.save();
+    
+    return this;
+}
 // UserDebtSchema.hasMany('User'),
 // UserDebtSchema.belongsTo('Payment'),
 

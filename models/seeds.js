@@ -9,7 +9,7 @@ const Category = require('./Category');
 const UserDebt = require('./UserDebt');
 
 // Give a path to the Seeds DATA
-mongoose.connect('mongodb://127.0.0.1/');
+mongoose.connect('mongodb://127.0.0.1/split_pay');
 
 const db = mongoose.connection;
 
@@ -58,33 +58,33 @@ db.once('open', async () => {
                 securityNumber: '222'
 
             }, 
-            groups: [
-                {
-                    group: createdGroups[0]
-                },
-                {
-                    group: createdGroups[1]   
-                }
-            ], 
-            groupDebts: [
-                {
-                    groupDebt: createdGroupDebts[0]
-                },
-                {
-                    groupDebt: createdGroupDebts[1]
-                },
-            ],
-            payments: [
-                {
-                    payment: createdPayments[0]
-                },
-                {
-                    payment: createdPayments[1]
-                },
-                {
-                    payment: createdPayments[3]
-                },
-            ]
+            // groups: [
+            //     {
+            //         group: createdGroups[0]
+            //     },
+            //     {
+            //         group: createdGroups[1]   
+            //     }
+            // ], 
+            // groupDebts: [
+            //     {
+            //         groupDebt: createdGroupDebts[0]
+            //     },
+            //     {
+            //         groupDebt: createdGroupDebts[1]
+            //     },
+            // ],
+            // payments: [
+            //     {
+            //         payment: createdPayments[0]
+            //     },
+            //     {
+            //         payment: createdPayments[1]
+            //     },
+            //     {
+            //         payment: createdPayments[3]
+            //     },
+            // ]
         }, 
 
         {
@@ -110,35 +110,35 @@ db.once('open', async () => {
                 securityNumber: '111',
 
             },
-            groups: [
-                {
-                    group: createdGroups[0]
-                },
-                {
-                    group: createdGroups[2]   
-                }
-            ], 
-            groupDebts: [
-                {
-                    groupDebt: createdGroupDebts[0]
-                },
-                {
-                    groupDebt: createdGroupDebts[2]
-                },
-            ],
-            userDebts: [
-                {
-                    userDebt: createdUserDebts[0]
-                }
-            ],
-            payments: [
-                {
-                    payment: createdPayments[0]
-                },
-                {
-                    payment: createdPayments[3]
-                },
-            ]
+            // groups: [
+            //     {
+            //         group: createdGroups[0]
+            //     },
+            //     {
+            //         group: createdGroups[2]   
+            //     }
+            // ], 
+            // groupDebts: [
+            //     {
+            //         groupDebt: createdGroupDebts[0]
+            //     },
+            //     {
+            //         groupDebt: createdGroupDebts[2]
+            //     },
+            // ],
+            // userDebts: [
+            //     {
+            //         userDebt: createdUserDebts[0]
+            //     }
+            // ],
+            // payments: [
+            //     {
+            //         payment: createdPayments[0]
+            //     },
+            //     {
+            //         payment: createdPayments[3]
+            //     },
+            // ]
         }, 
         {
             name: 'Craig', 
@@ -163,33 +163,33 @@ db.once('open', async () => {
                 securityNumber: '222',
 
             },
-            groups: [
-                {
-                    group: createdGroups[0]
-                },
-                {
-                    group: createdGroups[1]   
-                },
-                {
-                    group: createdGroups[2]   
-                }
-            ], 
-            groupDebts: [
-                {
-                    groupDebt: createdGroupDebts[0]
-                },
-                {
-                    groupDebt: createdGroupDebts[1]
-                },
-                {
-                    groupDebt: createdGroupDebts[2]
-                },
-            ],
-            payments: [
-                {
-                    payment: createdPayments[3]
-                },
-            ]
+            // groups: [
+            //     {
+            //         group: createdGroups[0]
+            //     },
+            //     {
+            //         group: createdGroups[1]   
+            //     },
+            //     {
+            //         group: createdGroups[2]   
+            //     }
+            // ], 
+            // groupDebts: [
+            //     {
+            //         groupDebt: createdGroupDebts[0]
+            //     },
+            //     {
+            //         groupDebt: createdGroupDebts[1]
+            //     },
+            //     {
+            //         groupDebt: createdGroupDebts[2]
+            //     },
+            // ],
+            // payments: [
+            //     {
+            //         payment: createdPayments[3]
+            //     },
+            // ]
         }, 
         {
             name: 'Kris', 
@@ -216,27 +216,27 @@ db.once('open', async () => {
                 securityNumber: '000',
 
             },
-            groups: [
-                {
-                    group: createdGroups[1]
-                },
-                {
-                    group: createdGroups[2]   
-                },
-            ], 
-            groupDebts: [
-                {
-                    groupDebt: createdGroupDebts[1]
-                },
-                {
-                    groupDebt: createdGroupDebts[2]
-                },
-            ],
-            payments: [
-                {
-                    payment: createdPayments[2]
-                },
-            ]
+            // groups: [
+            //     {
+            //         group: createdGroups[1]
+            //     },
+            //     {
+            //         group: createdGroups[2]   
+            //     },
+            // ], 
+            // groupDebts: [
+            //     {
+            //         groupDebt: createdGroupDebts[1]
+            //     },
+            //     {
+            //         groupDebt: createdGroupDebts[2]
+            //     },
+            // ],
+            // payments: [
+            //     {
+            //         payment: createdPayments[2]
+            //     },
+            // ]
         },
         {
             name: 'Luke', 
@@ -263,32 +263,32 @@ db.once('open', async () => {
                 securityNumber: '001',
 
             },
-            groups: [
-                {
-                    group: createdGroups[1]
-                },
-                {
-                    group: createdGroups[2]   
-                },
-            ], 
-            groupDebts: [
-                {
-                    groupDebt: createdGroupDebts[1]
-                },
-                {
-                    groupDebt: createdGroupDebts[2]
-                },
-            ],
-            userDebts: [
-                {
-                    userDebt: createdUserDebts[0]
-                }
-            ],
-            payments: [
-                {
-                    payment: createdPayments[3]
-                },
-            ]
+            // groups: [
+            //     {
+            //         group: createdGroups[1]
+            //     },
+            //     {
+            //         group: createdGroups[2]   
+            //     },
+            // ], 
+            // groupDebts: [
+            //     {
+            //         groupDebt: createdGroupDebts[1]
+            //     },
+            //     {
+            //         groupDebt: createdGroupDebts[2]
+            //     },
+            // ],
+            // userDebts: [
+            //     {
+            //         userDebt: createdUserDebts[0]
+            //     }
+            // ],
+            // payments: [
+            //     {
+            //         payment: createdPayments[3]
+            //     },
+            // ]
         },
 
 

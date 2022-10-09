@@ -17,7 +17,6 @@
     "mongoose": "^6.6.5",
     "nodemon": "^2.0.20"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mdak2806/split-pay-app-mongoose-backend.git"

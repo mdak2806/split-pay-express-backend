@@ -72,7 +72,7 @@ const UserSchema= new mongoose.Schema({
         {
             payment:
             {
-                ref: 'Payement',
+                ref: 'Payment',
                 type: mongoose.Schema.Types.ObjectId
             }
         }

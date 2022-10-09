@@ -34,6 +34,8 @@ const PaymentSchema = new mongoose.Schema({
 
 });
 
+
+
 // PaymentSchema.belongsTo('UserDebt')
 // PaymentSchema.hasMany('User')
 // PaymentSchema.belongsTo('GroupDebt')

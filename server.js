@@ -44,8 +44,9 @@ app.get('/', (req, res) => {
 
 
 // Index Users 
-  app.get('/users', async(req, res) => {
+  app.get('/users', async (req, res) => {
     try{
+        const filter = {}
         const users = await User.find();
         res.json(users)
 
@@ -66,6 +67,7 @@ app.get('/', (req, res) => {
             _id: req.params.id
         });
 
+        // user.
         console.log('user', user);
         res.send({ user})
 

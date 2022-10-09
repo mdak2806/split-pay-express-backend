@@ -1,4 +1,6 @@
 const  mongoose = require('mongoose');
+const Payment = require('./Payment');
+const User = require('./User');
 
 const GroupDebtSchema = new mongoose.Schema({
     // _id: Schema.Types.ObjectId, 
@@ -42,6 +44,36 @@ const GroupDebtSchema = new mongoose.Schema({
    
 
 }); // Schema()
+
+GroupDebtSchema.methods.saveGroup = async function( group ){
+    this.group_id.push({group: group});
+    await this.save();
+
+    User.group_id.push({group: this});
+    await Payment.save();
+
+    return this;
+},
+
+GroupDebtSchema.methods.savePayer = async function( user ){
+    this.payeer.push({user: user});
+    await this.save();
+
+    Payment.payer_id.push({user: this});
+    await Payment.save();
+    
+    return this;
+},
+GroupDebtSchema.methods.savePayer = async function( user ){
+    this.payeer.push({user: user});
+    await this.save();
+
+    Payment.payer_id.push({user: this});
+    await Payment.save();
+    
+    return this;
+}
+
 
 // GroupDebtSchema.hasMany('User');
 // GroupDebtSchema.belongsTo('Group');
