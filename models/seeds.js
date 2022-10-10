@@ -4,7 +4,7 @@ const mongoose = require('mongoose');
 const User = require('./User');
 const Payment = require('./Payment');
 const Group = require('./Group');
-const GroupDebt = require('./GroupDebt');
+// const GroupDebt = require('./GroupDebt');
 const Category = require('./Category');
 const UserDebt = require('./UserDebt');
 
@@ -59,31 +59,11 @@ db.once('open', async () => {
 
             }, 
             // groups: [
-            //     {
-            //         group: createdGroups[0]
-            //     },
-            //     {
-            //         group: createdGroups[1]   
-            //     }
+            //     createdGroups[0],
+            //     createdGroups[1]   
             // ], 
-            // groupDebts: [
-            //     {
-            //         groupDebt: createdGroupDebts[0]
-            //     },
-            //     {
-            //         groupDebt: createdGroupDebts[1]
-            //     },
-            // ],
             // payments: [
-            //     {
-            //         payment: createdPayments[0]
-            //     },
-            //     {
-            //         payment: createdPayments[1]
-            //     },
-            //     {
-            //         payment: createdPayments[3]
-            //     },
+            //     createdPayments[0],createdPayments[1], createdPayments[3]
             // ]
         }, 
 
@@ -111,33 +91,14 @@ db.once('open', async () => {
 
             },
             // groups: [
-            //     {
-            //         group: createdGroups[0]
-            //     },
-            //     {
-            //         group: createdGroups[2]   
-            //     }
+            //     createdGroups[0], 
+            //     createdGroups[2]   
             // ], 
-            // groupDebts: [
-            //     {
-            //         groupDebt: createdGroupDebts[0]
-            //     },
-            //     {
-            //         groupDebt: createdGroupDebts[2]
-            //     },
-            // ],
             // userDebts: [
-            //     {
-            //         userDebt: createdUserDebts[0]
-            //     }
+            //     createdUserDebts[0]
             // ],
             // payments: [
-            //     {
-            //         payment: createdPayments[0]
-            //     },
-            //     {
-            //         payment: createdPayments[3]
-            //     },
+            //      createdPayments[0], createdPayments[3]
             // ]
         }, 
         {
@@ -164,31 +125,11 @@ db.once('open', async () => {
 
             },
             // groups: [
-            //     {
-            //         group: createdGroups[0]
-            //     },
-            //     {
-            //         group: createdGroups[1]   
-            //     },
-            //     {
-            //         group: createdGroups[2]   
-            //     }
+            //     createdGroups[0], createdGroups[1],
+            //     createdGroups[2]   
             // ], 
-            // groupDebts: [
-            //     {
-            //         groupDebt: createdGroupDebts[0]
-            //     },
-            //     {
-            //         groupDebt: createdGroupDebts[1]
-            //     },
-            //     {
-            //         groupDebt: createdGroupDebts[2]
-            //     },
-            // ],
             // payments: [
-            //     {
-            //         payment: createdPayments[3]
-            //     },
+            //      createdPayments[3]
             // ]
         }, 
         {
@@ -217,25 +158,10 @@ db.once('open', async () => {
 
             },
             // groups: [
-            //     {
-            //         group: createdGroups[1]
-            //     },
-            //     {
-            //         group: createdGroups[2]   
-            //     },
+            //      createdGroups[1],createdGroups[2]   
             // ], 
-            // groupDebts: [
-            //     {
-            //         groupDebt: createdGroupDebts[1]
-            //     },
-            //     {
-            //         groupDebt: createdGroupDebts[2]
-            //     },
-            // ],
             // payments: [
-            //     {
-            //         payment: createdPayments[2]
-            //     },
+            // createdPayments[2]
             // ]
         },
         {
@@ -264,30 +190,13 @@ db.once('open', async () => {
 
             },
             // groups: [
-            //     {
-            //         group: createdGroups[1]
-            //     },
-            //     {
-            //         group: createdGroups[2]   
-            //     },
+            //     createdGroups[1], createdGroups[2]   
             // ], 
-            // groupDebts: [
-            //     {
-            //         groupDebt: createdGroupDebts[1]
-            //     },
-            //     {
-            //         groupDebt: createdGroupDebts[2]
-            //     },
-            // ],
             // userDebts: [
-            //     {
-            //         userDebt: createdUserDebts[0]
-            //     }
+            //     createdUserDebts[0]
             // ],
             // payments: [
-            //     {
-            //         payment: createdPayments[3]
-            //     },
+            //      createdPayments[3]
             // ]
         },
 
@@ -364,56 +273,59 @@ db.once('open', async () => {
                 description: 'House share bills with roommates',
                 numberUsers: 3,
                 users: [
-                    // createdUsers[0], createdUsers[1], createdUsers[2]
-
-                    {
-                        user: createdUsers[0],
-                    },
-                    {
-                        user: createdUsers[1],
-                    }, 
-                    {
-                        user: createdUsers[2],
-                    }
-                ]
-            }, 
+                    // createdUsers[0],
+                    // createdUsers[1], createdUsers[2]
+                ], 
+                groupDebts: {
+                    totalAmount: 180, 
+                    description: 'Split of household expense electrical bills', 
+                    category: createdCaregories[4], 
+                    payee:createdUsers[0],
+                    payer: [ createdUsers[1],createdUsers[2]],  
+                }
+            }, // group 0
 
             {
                 groupName: 'Holiday',
                 description: 'Holiday bill spliting',
                 numberUsers: 4,
-                users: [
-                    {
-                        user: createdUsers[0],
-                    },
-                    {
-                        user: createdUsers[2],
-                    }, 
-                    {
-                        user: createdUsers[3],
-                    },
-                    {
-                        user: createdUsers[4],
-                    },
-                ]
-            }, 
+                users: [ 
+                    // // createdUsers[0],
+                    // createdUsers[2],
+                    // createdUsers[3],
+                    // createdUsers[4],
+                ], 
+                groupDebts: [{
+                    totalAmount: 4000, 
+                    description: 'Split of household expense rent bills', 
+                    category: createdCaregories[7], 
+                    payee:createdUsers[2],
+                    payers: [
+                         createdUsers[0],
+                         createdUsers[3],createdUsers[4]
+                        ], 
+
+                },
+                {
+                    totalAmount: 2000, 
+                    description: 'Split of holiday travel', 
+                    category: createdCaregories[7], 
+                    payee: createdUsers[3],
+                    payers: [
+                         createdUsers[1],createdUsers[2], createdUsers[4]
+                        ]
+                },
+            ] // Groups debts
+            },// group 2
             {
                 groupName: 'Social',
                 description: 'Eating out spliting',
                 numberUsers: 4,
                 users: [
-                    {
-                        user: createdUsers[1],
-                    },
-                    {
-                        user: createdUsers[2],
-                    }, 
-                    {
-                        user: createdUsers[3],
-                    },
-                    {
-                        user: createdUsers[4],
-                    },
+                    // createdUsers[1],
+                    // createdUsers[2],
+                    // createdUsers[3],
+                    // createdUsers[4],
                 ]
             }, 
 
@@ -421,111 +333,6 @@ db.once('open', async () => {
 
         console.log('createdGroups:', createdGroups)
 
-    // Debt
-
-        // ActiveRecord: Delete Debt
-        await GroupDebt.deleteMany();
-
-        // ActiveRecord: Categories Create
-
-        const createdGroupDebts = await GroupDebt.create([ 
-
-            {
-                totalAmount: 180, 
-                description: 'Split of household expense electrical bills', 
-                category_id:[
-                    {
-                       category: createdCaregories[4], 
-                    }
-                ], 
-                group_id: [
-                    {
-                        group: createdGroups[2],
-                    }
-                ],
-                payee: [
-                    {
-                        user: createdUsers[0],
-                    }
-                ],
-                payer: [
-                    {
-                        user: createdUsers[1],
-                    },
-                    {
-                        user: createdUsers[2]
-                    },
-                ], 
-
-            }, 
-            {
-                totalAmount: 4000, 
-                description: 'Split of household expense rent bills', 
-                category_id:[
-                    {
-                       category: createdCaregories[7], 
-                    }
-                ], 
-                group_id: [
-                    {
-                        group: createdGroups[1],
-                    }
-                ],
-                payee: [
-                    {
-                        user: createdUsers[2],
-                    }
-                ],
-                payer: [
-                    {
-                        user: createdUsers[0],
-                    },
-                    {
-                        user: createdUsers[3]
-                    },
-                    {
-                        user: createdUsers[4]
-                    },
-                ], 
-
-            }, 
-            {
-                totalAmount: 2000, 
-                description: 'Split of holiday travel', 
-                category_id:[
-                    {
-                       category: createdCaregories[7], 
-                    }
-                ], 
-                group_id: [
-                    {
-                        group: createdGroups[1],
-                    }
-                ],
-                payee: [
-                    {
-                        user: createdUsers[3],
-                    }
-                ],
-                payer: [
-                    {
-                        user: createdUsers[1],
-                    },
-                    {
-                        user: createdUsers[2]
-                    },
-                    {
-                        user: createdUsers[4]
-                    },
-                ], 
-
-            }, 
-          
-
-
-        ]);
-
-        console.log('createdGroupDebts:', createdGroupDebts);
 
         // Individual User to User Debt
         await UserDebt.deleteMany();
@@ -535,21 +342,9 @@ db.once('open', async () => {
             {
                 totalAmount: 200, 
                 description: 'Split dinner', 
-                category_id: [
-                    {
-                        category: createdCaregories[7]
-                    }
-                ], 
-                payee: [
-                    {
-                        user: createdUsers[1]
-                    }
-                ], 
-                payer: [
-                    {
-                        user: createdUsers[4]
-                    }
-                ]
+                category: createdCaregories[7], 
+                payee: createdUsers[1],
+                payer:  createdUsers[4]
 
             }, 
         
@@ -570,79 +365,158 @@ db.once('open', async () => {
 
             {
                 paymentAmount: 60, 
-                debt_id:[
-                    {
-                        GroupDebt: createdGroupDebts[0]
-                    }
-                ],
-                payee_id:[
-                    {
-                        user: createdUsers[0]
-                    }
-                ],
-                payer_id: [
-                    {
-                        user: createdUsers[1]
-                    }
-                ]
+                receipt: 'X01020202', 
+                group: createdGroups[0],
+                payee: createdUsers[0], 
+                payer: createdUsers[1],
             }, 
             {
                 paymentAmount: 1000,
-                debt_id:[
-                    {
-                        GroupDebt: createdGroupDebts[2]
-                    }
-                ],
-                payee_id:[
-                    {
-                        user: createdUsers[2]
-                    }
-                ],
-                payer_id: [
-                    {
-                        user: createdUsers[0]
-                    }
-                ]
+                receipt: 'Y00020303',
+                group: createdGroups[2],
+                payee: createdUsers[2],
+                payer: createdUsers[0]
             }, 
             {
                 paymentAmount: 1000,
-                debt_id:[
-                    {
-                        GroupDebt: createdGroupDebts[2]
-                    }
-                ],
-                payee_id:[
-                    {
-                        user: createdUsers[2]
-                    }
-                ],
-                payer_id: [
-                    {
-                        user: createdUsers[3]
-                    }
-                ]
+                receipt: 'Y00020303',
+                group:createdGroups[2], 
+                payee: createdUsers[2],
+                payer: createdUsers[3]
             }, 
             {
                 paymentAmount: 50,
-                debt_id:[
-                    {
-                        UserDebt: createdUserDebts[0]
-                    }
-                ],
-                payee_id:[
-                    {
-                        user: createdUsers[1]
-                    }
-                ],
-                payer_id: [
-                    {
-                        user: createdUsers[4]
-                    }
-                ]
+                receipt: 'HUDKJ093298',
+                group: createdUserDebts[0],
+                payee: createdUsers[1],
+                payer: createdUsers[4]
             },
 
         ]);
 
         console.log('createdPayments:', createdPayments)
+
+
+        // // assoicated the new Groups back to the Users
+        // createdUsers[0].groups.push(createdGroups[0], createdGroups[1]);
+        // await createdUsers[0].save();
+        await createdGroups[0].saveUser(createdUsers[0], createdUsers[1], createdUsers[2]);
+        await createdGroups[1].saveUser(createdUsers[0], createdUsers[2], createdUsers[3],createdUsers[4] );
+        await createdGroups[2].saveUser(createdUsers[1], createdUsers[2], createdUsers[3],createdUsers[4] );
+
+
+
+        console.log('first users groups', createdUsers[0].groups, createdUsers[1].groups );
+        console.log('checked added first group', createdGroups[0]);
+
     process.exit(0) // stay on program
 });
+
+
+
+
+        // // ActiveRecord: Delete Debt
+        // await GroupDebt.deleteMany();
+
+        // // ActiveRecord: Categories Create
+
+        // const createdGroupDebts = await GroupDebt.create([ 
+
+        //     {
+        //         totalAmount: 180, 
+        //         description: 'Split of household expense electrical bills', 
+        //         category_id:[
+        //             {
+        //                category: createdCaregories[4], 
+        //             }
+        //         ], 
+        //         group_id: [
+        //             {
+        //                 group: createdGroups[2],
+        //             }
+        //         ],
+        //         payee: [
+        //             {
+        //                 user: createdUsers[0],
+        //             }
+        //         ],
+        //         payer: [
+        //             {
+        //                 user: createdUsers[1],
+        //             },
+        //             {
+        //                 user: createdUsers[2]
+        //             },
+        //         ], 
+
+        //     }, 
+        //     {
+        //         totalAmount: 4000, 
+        //         description: 'Split of household expense rent bills', 
+        //         category_id:[
+        //             {
+        //                category: createdCaregories[7], 
+        //             }
+        //         ], 
+        //         group_id: [
+        //             {
+        //                 group: createdGroups[1],
+        //             }
+        //         ],
+        //         payee: [
+        //             {
+        //                 user: createdUsers[2],
+        //             }
+        //         ],
+        //         payer: [
+        //             {
+        //                 user: createdUsers[0],
+        //             },
+        //             {
+        //                 user: createdUsers[3]
+        //             },
+        //             {
+        //                 user: createdUsers[4]
+        //             },
+        //         ], 
+
+        //     }, 
+        //     {
+        //         totalAmount: 2000, 
+        //         description: 'Split of holiday travel', 
+        //         category_id:[
+        //             {
+        //                category: createdCaregories[7], 
+        //             }
+        //         ], 
+        //         group_id: [
+        //             {
+        //                 group: createdGroups[1],
+        //             }
+        //         ],
+        //         payee: [
+        //             {
+        //                 user: createdUsers[3],
+        //             }
+        //         ],
+        //         payer: [
+        //             {
+        //                 user: createdUsers[1],
+        //             },
+        //             {
+        //                 user: createdUsers[2]
+        //             },
+        //             {
+        //                 user: createdUsers[4]
+        //             },
+        //         ], 
+
+        //     }, 
+          
+
+
+        // ]);
+
+            // Debt
+
+        // console.log('createdGroupDebts:', createdGroupDebts);

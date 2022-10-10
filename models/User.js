@@ -37,44 +37,29 @@ const UserSchema= new mongoose.Schema({
 
     groups: [
         {
-           group:
-           {
+          
             ref: 'Group', 
             type: mongoose.Schema.Types.ObjectId
-           } 
+           
         }
     ], 
-
-    // Adding User assoication to Debt Group
-
-    groupDebts: [
-        {
-            groupDebt:
-            {
-                ref: 'GroupDebt',
-                type: mongoose.Schema.Types.ObjectId
-            }
-        }
-    ],
 
     // Adding User assoication to User Debt
     userDebts: [
         {
-            userDebt:
-            {
-                ref: 'UserDebt',
-                type: mongoose.Schema.Types.ObjectId
-            }
+            
+            ref: 'UserDebt',
+            type: mongoose.Schema.Types.ObjectId
+
         }
     ], 
     // Adding User assoication to Payments
     payments: [
         {
-            payment:
-            {
-                ref: 'Payment',
-                type: mongoose.Schema.Types.ObjectId
-            }
+            
+            ref: 'Payment',
+            type: mongoose.Schema.Types.ObjectId
+           
         }
     ]
 

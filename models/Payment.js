@@ -3,33 +3,26 @@ const mongoose = require('mongoose');
 const PaymentSchema = new mongoose.Schema({
     // _id: Schema.Types.ObjectId, 
     paymentAmount: Number,
-    receipt: Number, 
-    debt_id: [{
-        GroupDebt: {
-            ref: 'GroupDebt', 
+    receipt: String, 
+    group: {
+            ref: 'Group', 
             type: mongoose.Schema.Types.ObjectId
         },
 
-        UserDebt: {
+    userDebt: {
             ref: 'UserDebt',
             type: mongoose.Schema.Types.ObjectId
         },
-
-    }],
     // user to recieve transaction
-    payee_id: [{
-        user: {
+    payee:{
             ref: 'User', 
             type: mongoose.Schema.Types.ObjectId
-        }
-    }],
+        },
     // user to send transaction
-    payer_id: [{
-        user: {
+    payer: {
             ref: 'User', 
             type: mongoose.Schema.Types.ObjectId
-        }
-    }], 
+        },
    
 
 });

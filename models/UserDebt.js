@@ -8,27 +8,20 @@ const UserDebtSchema = new mongoose.Schema({
     description: String, 
     receipt: String, 
     // object to store the category
-    category_id: [{
-        category:{
+    category: {
             ref: 'Category',
             type: mongoose.Schema.Types.ObjectId,
-        }
-    }], 
+        },
     //  object payee for User who will recieve payment
-    payee: [{
-        user: {
+    payee: {
             ref: 'User', 
             type: mongoose.Schema.Types.ObjectId
-        }
-
-    }],
+        },
      // object payer for User who will make the payement
-     payer: [{ 
-        user: {
+     payer: { 
             ref: 'User', 
             type: mongoose.Schema.Types.ObjectId
-        }
-    }], 
+        }, 
 
 
 }); // Schema()

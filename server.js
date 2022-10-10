@@ -23,7 +23,7 @@ const User = require('./models/User');
 const Category = require('./models/Category');
 const Payment = require('./models/Payment');
 const UserDebt= require('./models/UserDebt');
-const GroupDebt = require('./models/GroupDebt');
+// const GroupDebt = require('./models/GroupDebt');
 const Group = require('./models/Group');
 
 
@@ -119,18 +119,6 @@ app.get('/', (req, res) => {
 // TODO: EDIT page
 // TODO: Delete page - once posted/ complete
 
-  app.get('/groupDebts', async(req, res) => {
-    try{
-        const groupDebts = await GroupDebt.find();
-        res.json(groupDebts)
-
-    } catch( err ){
-        console.error('Error loading all GroupDebt', err);
-
-        // res.sendStatus(422);
-        res.status(422).json({error: 'Db connection error'})
-    }
-  }); // Get/groupDebts
 
 
 //   Index UserDebts page
@@ -169,3 +157,19 @@ app.get('/', (req, res) => {
 //   TODO: Payment show page
 
 // TODO: Payment Post page
+
+
+
+// /////////////// Deleted GROUP DEBT MODEL
+  // app.get('/groupDebts', async(req, res) => {
+  //   try{
+  //       const groupDebts = await GroupDebt.find();
+  //       res.json(groupDebts)
+
+  //   } catch( err ){
+  //       console.error('Error loading all GroupDebt', err);
+
+  //       // res.sendStatus(422);
+  //       res.status(422).json({error: 'Db connection error'})
+  //   }
+  // }); // Get/groupDebts

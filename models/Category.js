@@ -4,36 +4,27 @@ const CategorySchema = new mongoose.Schema({
     // _id: Schema.Types.ObjectId, 
     categoryName: String, 
 
-    // Adding Category assoication to Debt Group
+    // Adding Category assoication to Group
 
-    groupDebts: [
+    groups: [
         {
-            groupDebt:
-            {
-                ref: 'GroupDebt',
+                ref: 'Group',
                 type: mongoose.Schema.Types.ObjectId
-            }
         }
     ],
 
     // Adding Category assoication to User Debt
     userDebts: [
         {
-            userDebt:
-            {
                 ref: 'UserDebt',
                 type: mongoose.Schema.Types.ObjectId
-            }
         }
     ], 
     // Adding Category assoication to Payments
     payments: [
         {
-            payment:
-            {
                 ref: 'Payement',
                 type: mongoose.Schema.Types.ObjectId
-            }
         }
     ]
 

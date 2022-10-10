@@ -8,24 +8,33 @@ const GroupSchema = new mongoose.Schema({
     numberUsers: Number, 
     users: [ 
         {
-        user: 
-            {
-                // A group belongs to many users
-                ref: 'User', 
-                type: mongoose.Schema.Types.ObjectId
-            }, 
+            // A group belongs to many users
+            ref: 'User', 
+            type: mongoose.Schema.Types.ObjectId
+         
         }
     ], 
     // Creating an assoication with Group and Group Debts
-    groupDebts: [
-        {
-            groupDebt:
-            {
-                ref: 'GroupDebt', 
-                type: mongoose.Schema.Types.ObjectId
-            }
-        }
-    ]
+    groupDebts: [{
+        amount: Number,
+        description: String,
+        receipt: String, 
+
+        category: {
+            ref: 'Category', 
+            type: mongoose.Schema.Types.ObjectId
+        },
+        payee: {
+            ref: 'User', 
+            type: mongoose.Schema.Types.ObjectId
+        },
+        payers:[{
+            ref: 'User', 
+            type: mongoose.Schema.Types.ObjectId 
+        }]
+
+
+    }]
 
 });
 
@@ -33,12 +42,17 @@ const GroupSchema = new mongoose.Schema({
 GroupSchema.methods.saveUser = async function( user ){
 
     // Save our new group with the user
-    this.users.push({user: user});
+    this.users.push(user);
     await this.save();
+
+    user.groups.push(this);
+
+    await user.save();
+
     
     // chain the method and return relevant data
     return this;
-
+  
 }
 
 // customer model method to save the information
