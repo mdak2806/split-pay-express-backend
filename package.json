@@ -18,6 +18,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^4.10.0",
     "mongoose": "^6.6.5",
+    "nodeman": "^1.1.2",
     "nodemon": "^2.0.20"
   },
   "repository": {

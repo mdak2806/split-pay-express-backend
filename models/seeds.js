@@ -10,7 +10,7 @@ const Category = require('./Category');
 const UserDebt = require('./UserDebt');
 
 // Give a path to the Seeds DATA
-mongoose.connect('mongodb://127.0.0.1/split_pay');
+mongoose.connect('mongodb://127.0.0.1');
 
 const db = mongoose.connection;
 

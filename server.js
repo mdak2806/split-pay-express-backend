@@ -29,7 +29,7 @@ const UserDebt= require('./models/UserDebt');
 const Group = require('./models/Group');
 
 
-mongoose.connect('mongodb://127.0.0.1/split_pay');
+mongoose.connect('mongodb://127.0.0.1');
 const db = mongoose.connection;
 
 db.on('error', err => {
@@ -42,6 +42,18 @@ db.on('error', err => {
 const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
 const jwtAuthenticate = require('express-jwt');
+
+
+
+const checkAuth = () => {
+  return jwtAuthenticate.expressjwt({ 
+      secret: SERVER_SECRET_KEY, // check token hasn't been tampered with
+      algorithms: ['HS256'],
+      requestProperty: 'auth' // gives us 'req.auth'
+  });
+}; // checkAuth
+
+const SERVER_SECRET_KEY = 'yourSecretKeyHereCHICKEN';
 
 // Split Pay Routes
 app.get('/', (req, res) => {
@@ -205,11 +217,11 @@ app.post('/login', async (req, res) => {
             // res.json({ success: true })
             const token = jwt.sign(
                 { _id: user._id },
-                process.env.JWT_SEC,
+                SERVER_SECRET_KEY,
                 // expiry date/other config:
                 { expiresIn: '72h' } // 3 days
 
-                );
+            );
 
                 res.json( { token }); 
                
@@ -225,4 +237,31 @@ app.post('/login', async (req, res) => {
         res.sendStatus(500); // Low-level error
         
     }
-})
+}) //login
+
+// ** Routes below this line only work for authenticated users - move the required ones under here.
+app.use( checkAuth() ); // provide req.auth (the User ID from token) to all following routes
+// Custom middleware, defined inline:
+// Use the req.auth ID from the middleware above and try to look up a user with it - 
+// if found, attach to req.current_user for all the requests that follow this;
+// if not found, return an error code
+app.use( async (req, res, next) => {
+    try {
+        const user = await User.findOne({ _id: req.auth._id })
+        if( user === null ){
+            res.sendStatus( 401 ); // invalid/stale token
+            // by running a res method here, this middleware will not
+            // allow any further routes to be handled below it
+        } else {
+            req.current_user = user; // add 'current_user' for the next route to access
+            next(); // move on to the next route handler in this server
+        }
+    } catch( err ){
+        console.log('Error querying User in auth', err);
+        res.sendStatus( 500 );
+    } 
+});
+// All routes below now have a 'req.current_user defined
+app.get('/current_user', (req, res) => {
+    res.json( req.current_user );
+});
