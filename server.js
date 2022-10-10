@@ -1,6 +1,10 @@
 const express = require('express');
 const app = express();
 const PORT = 3000; 
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
+// const jwtAuthenticate = require('express-jwt');
+
 
 const cors = require('cors');
 // Use this CORS package as part of the Express
@@ -173,3 +177,49 @@ app.get('/', (req, res) => {
   //       res.status(422).json({error: 'Db connection error'})
   //   }
   // }); // Get/groupDebts
+
+  // At the end of the file, we add a new route for Login
+// app.post('/login', (req, res) => {
+//   // console.log('login:', req.body);
+//   // res.json( req.body ); // just for debugging
+
+// });
+
+// LOGIN
+
+// adding jwt to the route:
+app.post('/login', async (req, res) => {
+    console.log('login:', req.body);
+    
+    const { email, password } = req.body 
+
+    try {
+
+        const user = await User.findOne({ email }) // short for { email: email }
+
+        if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
+
+            // res.json({ success: true })
+            const token = jwt.sign(
+                { _id: user._id },
+                process.env.JWT_SEC,
+                // expiry date/other config:
+                { expiresIn: '72h' } // 3 days
+
+                );
+
+                res.json( { token }); 
+               
+        } else {
+            // incorrect credentials: user not found ( by email ) or passwords don't 
+            // match
+            res.status( 401 ).json({ success: false }); // Unauthorised code
+        }
+
+    } catch (err) {
+
+        console.log('Error verifying login credentials:', err);
+        res.sendStatus(500); // Low-level error
+        
+    }
+})

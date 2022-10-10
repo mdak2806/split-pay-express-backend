@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
 
 // Load models
 const User = require('./User');
@@ -36,7 +37,7 @@ db.once('open', async () => {
         {
             name: 'Mohamad', 
             email: 'mdak2806@gmail.com',
-            passwordDigest: 'chicken',
+            passwordDigest: bcrypt.hashSync('chicken', 10),
 
             address: {
                 street: '80 Station St',
@@ -70,7 +71,7 @@ db.once('open', async () => {
         {
             name: 'Wen', 
             email: 'wen@gmail.com',
-            passwordDigest: 'chicken',
+            passwordDigest: bcrypt.hashSync('chicken', 10),
 
             address: {
                 street: '34 Station St',
@@ -104,7 +105,7 @@ db.once('open', async () => {
         {
             name: 'Craig', 
             email: 'craig@gmail.com',
-            passwordDigest: 'chicken',
+            passwordDigest: bcrypt.hashSync('chicken', 10),
 
             address: {
                 street: '90 Station St',
@@ -135,7 +136,7 @@ db.once('open', async () => {
         {
             name: 'Kris', 
             email: 'kris@gmail.com',
-            passwordDigest: 'chicken',
+            passwordDigest: bcrypt.hashSync('chicken', 10),
 
             address: {
                 street: '30 Station St',
@@ -167,7 +168,7 @@ db.once('open', async () => {
         {
             name: 'Luke', 
             email: 'luke@gmail.com',
-            passwordDigest: 'chicken',
+            passwordDigest: bcrypt.hashSync('chicken', 10),
 
             address: {
                 street: '2 Station St',
