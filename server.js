@@ -1,9 +1,7 @@
 const express = require('express');
 const app = express();
 const PORT = 3000; 
-const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
-// const jwtAuthenticate = require('express-jwt');
+
 
 
 const cors = require('cors');
@@ -39,6 +37,11 @@ db.on('error', err => {
   process.exit( 1 );
 
 });
+
+// Authentication
+const bcrypt = require('bcrypt');
+const jwt    = require('jsonwebtoken');
+const jwtAuthenticate = require('express-jwt');
 
 // Split Pay Routes
 app.get('/', (req, res) => {
