@@ -348,10 +348,16 @@ db.once('open', async () => {
                 payer:  createdUsers[4]
 
             }, 
-        
+            {
+                totalAmount: 400, 
+                description: 'Split dinner', 
+                category: createdCaregories[7], 
+                payee: createdUsers[2],
+                payer:  createdUsers[3]
+
+            }, 
 
         ]);
-
         console.log('createdUserDebts', createdUserDebts);
 
 
@@ -401,14 +407,29 @@ db.once('open', async () => {
         // // assoicated the new Groups back to the Users
         // createdUsers[0].groups.push(createdGroups[0], createdGroups[1]);
         // await createdUsers[0].save();
+        // Linking Users to Groups many to many assoications
         await createdGroups[0].saveUser(createdUsers[0], createdUsers[1], createdUsers[2]);
         await createdGroups[1].saveUser(createdUsers[0], createdUsers[2], createdUsers[3],createdUsers[4] );
         await createdGroups[2].saveUser(createdUsers[1], createdUsers[2], createdUsers[3],createdUsers[4] );
 
+        // Linking User Debts to Users (Many to Many assoications)
+        await createdUserDebts[0].saveUser(createdUsers[1], createdUsers[4]);
+        await createdUserDebts[1].saveUser(createdUsers[2], createdUsers[3]);
+
+        await createdPayments[0].saveUser(createdUsers[0], createdUsers[1]);
+        await createdPayments[1].saveUser(createdUsers[2], createdUsers[0]);
+        await createdPayments[2].saveUser(createdUsers[2], createdUsers[3]);
+        await createdPayments[3].saveUser(createdUsers[1], createdUsers[4]);
 
 
         console.log('first users groups', createdUsers[0].groups, createdUsers[1].groups );
         console.log('checked added first group', createdGroups[0]);
+        console.log('User Debts 2 and 4:', createdUsers[2].userDebts, createdUsers[3].userDebts );
+        console.log('First user payments:', createdUsers[0].payments);
+
+        // console.log('User Debts 1 and 4:', createdUsers[1].userDebts, createdUsers[4].userDebts );
+        // console.log('checked added UserDebt', createdUserDebts[0]);
+
 
     process.exit(0) // stay on program
 });

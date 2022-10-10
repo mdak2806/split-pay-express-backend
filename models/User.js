@@ -67,6 +67,14 @@ const UserSchema= new mongoose.Schema({
 
 }); // User Schema()
 
+// UserSchema.methods.savePayments = async function( pay){
+
+//     // Save our payments in user model
+//     this.payments.push(pay);
+//     await this.save();
+
+    
+// }
 // UserSchema.hasMany('Group');
 // UserSchema.hasMany('GroupDebt');
 // UserSchema.hasMany('UserDebt');
