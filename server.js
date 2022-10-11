@@ -174,6 +174,49 @@ app.get('/', (req, res) => {
     }
   }); // Get/payment
 
+  app.post('/signup', async (req, res) => {
+    console.log('signup: ', req.body);
+    res.json(req.body);
+
+    const newUser = { 
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password
+    };
+
+    try{
+        const user = await User.create({newUser});
+        console.log('new User created', user)
+      //   if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
+
+      //     // res.json({ success: true })
+      //     const token = jwt.sign(
+      //         { _id: user._id },
+      //         SERVER_SECRET_KEY,
+      //         // expiry date/other config:
+      //         { expiresIn: '72h' } // 3 days
+
+      //     );
+
+      //         res.json( { token }); 
+             
+      // } else {
+      //     // incorrect credentials: user not found ( by email ) or passwords don't 
+      //     // match
+      //     res.status( 401 ).json({ success: false }); // Unauthorised code
+      // }
+    } // try 
+    catch (err) {
+
+        console.log('Error verifying login credentials:', err);
+        res.sendStatus(500); // Low-level error
+    
+    } // catch
+
+
+    
+  })   // create new user
+
 //   TODO: Payment show page
 
 // TODO: Payment Post page
@@ -240,6 +283,8 @@ app.post('/login', async (req, res) => {
     }
 }) //login
 
+
+
 // ** Routes below this line only work for authenticated users - move the required ones under here.
 app.use( checkAuth() ); // provide req.auth (the User ID from token) to all following routes
 // Custom middleware, defined inline:
@@ -263,6 +308,8 @@ app.use( async (req, res, next) => {
     } 
 });
 // All routes below now have a 'req.current_user defined
+// TODO: dont send everything keep it limited
+// 
 app.get('/current_user', (req, res) => {
     res.json( req.current_user );
 });
