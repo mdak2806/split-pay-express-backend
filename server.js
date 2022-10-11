@@ -201,6 +201,25 @@ app.get('/', (req, res) => {
 
 // });
 
+
+// SIGNUP
+
+router.post("/signup", async (req, res)=>{
+  const newUser = new User({
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password.toString(),
+  });
+
+  try{
+      const savedUser = await newUser.save();
+      res.json(savedUser);
+  }catch(err){
+      // console.log(err);
+      res.status(500).json(err);
+  }
+
+});
 // LOGIN
 
 // adding jwt to the route:
