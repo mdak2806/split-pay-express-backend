@@ -186,19 +186,21 @@ app.get('/', (req, res) => {
 
     try{
         const user = await User.create({newUser});
+        const savedUser = await user.save();
+        
         console.log('new User created', user)
-      //   if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
+        // if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
 
-      //     // res.json({ success: true })
-      //     const token = jwt.sign(
-      //         { _id: user._id },
-      //         SERVER_SECRET_KEY,
-      //         // expiry date/other config:
-      //         { expiresIn: '72h' } // 3 days
+          // res.json({ success: true })
+          const token = jwt.sign(
+              { _id: savedUser._id },
+              SERVER_SECRET_KEY,
+              // expiry date/other config:
+              { expiresIn: '72h' } // 3 days
 
-      //     );
+          );
 
-      //         res.json( { token }); 
+              res.json( { token, savedUser }); 
              
       // } else {
       //     // incorrect credentials: user not found ( by email ) or passwords don't 
