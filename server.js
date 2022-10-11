@@ -174,22 +174,29 @@ app.get('/', (req, res) => {
     }
   }); // Get/payment
 
-  app.post('/signup', async (req, res) => {
-    console.log('signup: ', req.body);
-    res.json(req.body);
+  // app.post('/signup', async (req, res) => {
+  //   console.log('signup: ', req.body);
+  //   res.json(req.body);
 
-    const newUser = { 
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password
-    };
+  //   const newUser = { 
+  //     name: req.body.name,
+  //     email: req.body.email,
+  //     password: req.body.password
+  //   };
 
+<<<<<<< HEAD
     try{
         const user = await User.create({newUser});
         const savedUser = await user.save();
         
         console.log('new User created', user)
         // if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
+=======
+  //   try{
+  //       const user = await User.create({newUser});
+  //       console.log('new User created', user)
+      //   if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
+>>>>>>> f11f3107ff09dad09f4b0c9833331c0a868deb66
 
           // res.json({ success: true })
           const token = jwt.sign(
@@ -206,18 +213,18 @@ app.get('/', (req, res) => {
       //     // incorrect credentials: user not found ( by email ) or passwords don't 
       //     // match
       //     res.status( 401 ).json({ success: false }); // Unauthorised code
-      // }
-    } // try 
-    catch (err) {
+    //   // }
+    // } // try 
+    // catch (err) {
 
-        console.log('Error verifying login credentials:', err);
-        res.sendStatus(500); // Low-level error
+    //     console.log('Error verifying login credentials:', err);
+    //     res.sendStatus(500); // Low-level error
     
-    } // catch
+    // } // catch
 
 
     
-  })   // create new user
+  // })   // create new user
 
 //   TODO: Payment show page
 
@@ -245,6 +252,47 @@ app.get('/', (req, res) => {
 //   // res.json( req.body ); // just for debugging
 
 // });
+
+
+// SIGNUP
+
+app.post("/signup", async (req, res)=>{
+  const newUser = new User({
+      name: req.body.name,
+      email: req.body.email,
+      passwordDigest: bcrypt.hashSync(req.body.password, 10),
+  });
+
+  try{
+      const savedUser = await newUser.save();
+      console.log("saved users", savedUser)
+      // if ( savedUser && bcrypt.compareSync(req.body.password, savedUser.passwordDigest) ) {
+
+        // res.json({ success: true })
+        const token = jwt.sign(
+            { _id: savedUser._id },
+            SERVER_SECRET_KEY,
+            // expiry date/other config:
+            { expiresIn: '72h' } // 3 days
+
+        );
+        console.log("token", token)
+        
+        res.json( { token, savedUser }); 
+           
+    // } else {
+    //     // incorrect credentials: user not found ( by email ) or passwords don't 
+    //     // match
+    //     res.status( 401 ).json({ success: false }); // Unauthorised code
+    // }
+  }catch(err){
+      // console.log(err);
+      console.log('Error verifying login credentials:', err);
+        res.sendStatus(500);
+  }
+
+}); // sign up
+
 
 // LOGIN
 
