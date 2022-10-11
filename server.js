@@ -29,7 +29,7 @@ const UserDebt= require('./models/UserDebt');
 const Group = require('./models/Group');
 
 
-mongoose.connect('mongodb://127.0.0.1');
+mongoose.connect(process.env.MONGODB_CLOUD_URL);
 const db = mongoose.connection;
 
 db.on('error', err => {
@@ -53,7 +53,7 @@ const checkAuth = () => {
   });
 }; // checkAuth
 
-const SERVER_SECRET_KEY = 'yourSecretKeyHereCHICKEN';
+const SERVER_SECRET_KEY = process.env.SERVER_SECRET_KEY;
 
 // Split Pay Routes
 app.get('/', (req, res) => {

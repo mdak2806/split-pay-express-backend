@@ -8,9 +8,11 @@ const Group = require('./Group');
 // const GroupDebt = require('./GroupDebt');
 const Category = require('./Category');
 const UserDebt = require('./UserDebt');
+require('dotenv').config();
+// console.log(process.env);
 
 // Give a path to the Seeds DATA
-mongoose.connect('mongodb://127.0.0.1');
+mongoose.connect(process.env.MONGODB_CLOUD_URL);
 
 const db = mongoose.connection;
 
