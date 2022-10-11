@@ -174,85 +174,10 @@ app.get('/', (req, res) => {
     }
   }); // Get/payment
 
-  // app.post('/signup', async (req, res) => {
-  //   console.log('signup: ', req.body);
-  //   res.json(req.body);
-
-  //   const newUser = { 
-  //     name: req.body.name,
-  //     email: req.body.email,
-  //     password: req.body.password
-  //   };
-
-<<<<<<< HEAD
-    try{
-        const user = await User.create({newUser});
-        const savedUser = await user.save();
-        
-        console.log('new User created', user)
-        // if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
-=======
-  //   try{
-  //       const user = await User.create({newUser});
-  //       console.log('new User created', user)
-      //   if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
->>>>>>> f11f3107ff09dad09f4b0c9833331c0a868deb66
-
-          // res.json({ success: true })
-          const token = jwt.sign(
-              { _id: savedUser._id },
-              SERVER_SECRET_KEY,
-              // expiry date/other config:
-              { expiresIn: '72h' } // 3 days
-
-          );
-
-              res.json( { token, savedUser }); 
-             
-      // } else {
-      //     // incorrect credentials: user not found ( by email ) or passwords don't 
-      //     // match
-      //     res.status( 401 ).json({ success: false }); // Unauthorised code
-    //   // }
-    // } // try 
-    // catch (err) {
-
-    //     console.log('Error verifying login credentials:', err);
-    //     res.sendStatus(500); // Low-level error
-    
-    // } // catch
-
-
-    
-  // })   // create new user
 
 //   TODO: Payment show page
 
 // TODO: Payment Post page
-
-
-
-// /////////////// Deleted GROUP DEBT MODEL
-  // app.get('/groupDebts', async(req, res) => {
-  //   try{
-  //       const groupDebts = await GroupDebt.find();
-  //       res.json(groupDebts)
-
-  //   } catch( err ){
-  //       console.error('Error loading all GroupDebt', err);
-
-  //       // res.sendStatus(422);
-  //       res.status(422).json({error: 'Db connection error'})
-  //   }
-  // }); // Get/groupDebts
-
-  // At the end of the file, we add a new route for Login
-// app.post('/login', (req, res) => {
-//   // console.log('login:', req.body);
-//   // res.json( req.body ); // just for debugging
-
-// });
-
 
 // SIGNUP
 
@@ -343,7 +268,10 @@ app.use( checkAuth() ); // provide req.auth (the User ID from token) to all foll
 // if not found, return an error code
 app.use( async (req, res, next) => {
     try {
-        const user = await User.findOne({ _id: req.auth._id })
+        const user = await User.findOne({ _id: req.auth._id }).populate(['groups', 'payments'])
+
+        console.log(`Req ${req.path}`, JSON.stringify(user));
+
         if( user === null ){
             res.sendStatus( 401 ); // invalid/stale token
             // by running a res method here, this middleware will not
@@ -363,3 +291,64 @@ app.use( async (req, res, next) => {
 app.get('/current_user', (req, res) => {
     res.json( req.current_user );
 });
+
+
+
+  // app.post('/signup', async (req, res) => {
+  //   console.log('signup: ', req.body);
+  //   res.json(req.body);
+
+  //   const newUser = { 
+  //     name: req.body.name,
+  //     email: req.body.email,
+  //     password: req.body.password
+  //   };
+
+  //   try{
+  //       const user = await User.create({newUser});
+  //       console.log('new User created', user)
+      //   if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
+
+          // res.json({ success: true })
+          // const token = jwt.sign(
+          //     { _id: savedUser._id },
+          //     SERVER_SECRET_KEY,
+          //     // expiry date/other config:
+          //     { expiresIn: '72h' } // 3 days
+
+          // );
+
+          //     res.json( { token, savedUser }); 
+             
+      // } else {
+      //     // incorrect credentials: user not found ( by email ) or passwords don't 
+      //     // match
+      //     res.status( 401 ).json({ success: false }); // Unauthorised code
+    //   // }
+    // } // try 
+    // catch (err) {
+
+    //     console.log('Error verifying login credentials:', err);
+    //     res.sendStatus(500); // Low-level error
+    
+    // } // catch
+// /////////////// Deleted GROUP DEBT MODEL
+  // app.get('/groupDebts', async(req, res) => {
+  //   try{
+  //       const groupDebts = await GroupDebt.find();
+  //       res.json(groupDebts)
+
+  //   } catch( err ){
+  //       console.error('Error loading all GroupDebt', err);
+
+  //       // res.sendStatus(422);
+  //       res.status(422).json({error: 'Db connection error'})
+  //   }
+  // }); // Get/groupDebts
+
+  // At the end of the file, we add a new route for Login
+// app.post('/login', (req, res) => {
+//   // console.log('login:', req.body);
+//   // res.json( req.body ); // just for debugging
+
+// });
