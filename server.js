@@ -28,6 +28,7 @@ const UserDebt= require('./models/UserDebt');
 // const GroupDebt = require('./models/GroupDebt');
 const Group = require('./models/Group');
 
+require('dotenv').config();
 
 mongoose.connect(process.env.MONGODB_CLOUD_URL);
 const db = mongoose.connection;
@@ -47,7 +48,7 @@ const jwtAuthenticate = require('express-jwt');
 
 const checkAuth = () => {
   return jwtAuthenticate.expressjwt({ 
-      secret: SERVER_SECRET_KEY, // check token hasn't been tampered with
+      secret: process.env.SERVER_SECRET_KEY, // check token hasn't been tampered with
       algorithms: ['HS256'],
       requestProperty: 'auth' // gives us 'req.auth'
   });
