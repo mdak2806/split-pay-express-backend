@@ -7,6 +7,14 @@ const UserDebtSchema = new mongoose.Schema({
     totalAmount: Number, 
     description: String, 
     receipt: String, 
+    users: [
+        {
+            // A User Debt belongs to many users
+            ref: 'User', 
+            type: mongoose.Schema.Types.ObjectId
+            
+        }
+    ],
     // object to store the category
     category: {
             ref: 'Category',
@@ -25,6 +33,28 @@ const UserDebtSchema = new mongoose.Schema({
 
 
 }); // Schema()
+
+
+// customer model method to save the information
+UserDebtSchema.methods.saveUser = async function( user ){
+
+    // Save our new group with the user
+    this.users.push(user);
+    await this.save();
+
+    user.userDebts.push(this);
+
+    await user.save();
+
+    
+    // chain the method and return relevant data
+    return this;
+  
+}
+
+
+
+
 
 
 UserDebtSchema.methods.savePayee = async function( user ){

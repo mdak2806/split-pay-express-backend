@@ -56,19 +56,19 @@ GroupSchema.methods.saveUser = async function( user ){
 }
 
 // customer model method to save the information
-GroupSchema.methods.saveGroupDebt = async function( groupDebt ){
+// GroupSchema.methods.saveGroupDebt = async function( groupDebt ){
 
-    // Save our new debt to the group
-    this.groupDebts.push({groupDebt: groupDebt});
-    await this.save();
+//     // Save our new debt to the group
+//     this.groupDebts.push({groupDebt: groupDebt});
+//     await this.save();
 
-    // also save onto the Payment model
-    Payment.debt_id.push({ groupDebt: this})
-    // chain the method and return relevant data
-    return this;
+//     // also save onto the Payment model
+//     Payment.debt_id.push({ groupDebt: this})
+//     // chain the method and return relevant data
+//     return this;
 
-}
-// GroupSchema.hasMany('User'),
+// }
+// // GroupSchema.hasMany('User'),
 // GroupSchema.hasMany('GroupDebt'),
 // GroupSchema.hasMany('Payment'),
 
