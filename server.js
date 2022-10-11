@@ -174,19 +174,19 @@ app.get('/', (req, res) => {
     }
   }); // Get/payment
 
-  app.post('/signup', async (req, res) => {
-    console.log('signup: ', req.body);
-    res.json(req.body);
+  // app.post('/signup', async (req, res) => {
+  //   console.log('signup: ', req.body);
+  //   res.json(req.body);
 
-    const newUser = { 
-      name: req.body.name,
-      email: req.body.email,
-      password: req.body.password
-    };
+  //   const newUser = { 
+  //     name: req.body.name,
+  //     email: req.body.email,
+  //     password: req.body.password
+  //   };
 
-    try{
-        const user = await User.create({newUser});
-        console.log('new User created', user)
+  //   try{
+  //       const user = await User.create({newUser});
+  //       console.log('new User created', user)
       //   if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
 
       //     // res.json({ success: true })
@@ -204,18 +204,18 @@ app.get('/', (req, res) => {
       //     // incorrect credentials: user not found ( by email ) or passwords don't 
       //     // match
       //     res.status( 401 ).json({ success: false }); // Unauthorised code
-      // }
-    } // try 
-    catch (err) {
+    //   // }
+    // } // try 
+    // catch (err) {
 
-        console.log('Error verifying login credentials:', err);
-        res.sendStatus(500); // Low-level error
+    //     console.log('Error verifying login credentials:', err);
+    //     res.sendStatus(500); // Low-level error
     
-    } // catch
+    // } // catch
 
 
     
-  })   // create new user
+  // })   // create new user
 
 //   TODO: Payment show page
 
@@ -247,22 +247,44 @@ app.get('/', (req, res) => {
 
 // SIGNUP
 
-router.post("/signup", async (req, res)=>{
+app.post("/signup", async (req, res)=>{
   const newUser = new User({
-      username: req.body.username,
+      name: req.body.name,
       email: req.body.email,
-      password: req.body.password.toString(),
+      passwordDigest: bcrypt.hashSync(req.body.password, 10),
   });
 
   try{
       const savedUser = await newUser.save();
-      res.json(savedUser);
+      console.log("saved users", savedUser)
+      // if ( savedUser && bcrypt.compareSync(req.body.password, savedUser.passwordDigest) ) {
+
+        // res.json({ success: true })
+        const token = jwt.sign(
+            { _id: savedUser._id },
+            SERVER_SECRET_KEY,
+            // expiry date/other config:
+            { expiresIn: '72h' } // 3 days
+
+        );
+        console.log("token", token)
+        
+        res.json( { token, savedUser }); 
+           
+    // } else {
+    //     // incorrect credentials: user not found ( by email ) or passwords don't 
+    //     // match
+    //     res.status( 401 ).json({ success: false }); // Unauthorised code
+    // }
   }catch(err){
       // console.log(err);
-      res.status(500).json(err);
+      console.log('Error verifying login credentials:', err);
+        res.sendStatus(500);
   }
 
-});
+}); // sign up
+
+
 // LOGIN
 
 // adding jwt to the route:
