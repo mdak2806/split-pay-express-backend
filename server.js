@@ -163,7 +163,7 @@ app.get('/', (req, res) => {
 
   app.get('/payment', async(req, res) => {
     try{
-        const payment = await Payment.find();
+        const payment = await Payment.find().populate(['group', 'payee', 'payer', 'users']);
         res.json(payment)
 
     } catch( err ){
