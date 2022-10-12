@@ -409,19 +409,32 @@ db.once('open', async () => {
         createdUsers[0].groups.push(createdGroups[0], createdGroups[1]);
         await createdUsers[0].save();
         // Linking Users to Groups many to many assoications
-        await createdGroups[0].saveUser(createdUsers[0], createdUsers[1], createdUsers[2]);
-        await createdGroups[1].saveUser(createdUsers[0], createdUsers[2], createdUsers[3],createdUsers[4] );
-        await createdGroups[2].saveUser(createdUsers[1], createdUsers[2], createdUsers[3],createdUsers[4] );
+        await createdGroups[0].saveUser(createdUsers[0]);
+        await createdGroups[0].saveUser(createdUsers[1]);
+        await createdGroups[0].saveUser(createdUsers[2]);
+        await createdGroups[1].saveUser(createdUsers[0]);
+        await createdGroups[1].saveUser(createdUsers[2]);
+        await createdGroups[1].saveUser(createdUsers[3]);
+        await createdGroups[1].saveUser(createdUsers[4]);
+        await createdGroups[2].saveUser(createdUsers[1]);
+        await createdGroups[2].saveUser(createdUsers[2]);
+        await createdGroups[2].saveUser(createdUsers[3]);
+        await createdGroups[2].saveUser(createdUsers[4]);
 
         // Linking User Debts to Users (Many to Many assoications)
-        await createdUserDebts[0].saveUser(createdUsers[1], createdUsers[4]);
-        await createdUserDebts[1].saveUser(createdUsers[2], createdUsers[3]);
+        await createdUserDebts[0].saveUser(createdUsers[1]);
+        await createdUserDebts[0].saveUser(createdUsers[4]);
+        await createdUserDebts[1].saveUser(createdUsers[2]);
+        await createdUserDebts[1].saveUser(createdUsers[3]);
 
-        await createdPayments[0].saveUser(createdUsers[0], createdUsers[1]);
-        await createdPayments[1].saveUser(createdUsers[2], createdUsers[0]);
-        await createdPayments[2].saveUser(createdUsers[2], createdUsers[3]);
-        await createdPayments[3].saveUser(createdUsers[1], createdUsers[4]);
-
+        await createdPayments[0].saveUser(createdUsers[0]);
+        await createdPayments[0].saveUser(createdUsers[1]);
+        await createdPayments[1].saveUser(createdUsers[2]);
+        await createdPayments[1].saveUser(createdUsers[1]);
+        await createdPayments[2].saveUser(createdUsers[2]);
+        await createdPayments[2].saveUser(createdUsers[3]);
+        await createdPayments[3].saveUser(createdUsers[1]);
+        await createdPayments[3].saveUser(createdUsers[4]);
 
         console.log('first users groups', createdUsers[0].groups, createdUsers[1].groups );
         console.log('checked added first group', createdGroups[0]);
