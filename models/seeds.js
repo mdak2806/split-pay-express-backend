@@ -232,7 +232,7 @@ db.once('open', async () => {
                 categoryName: 'Groceries',
             },
             {
-                categoryName: 'Health',
+                categoryName: 'Accesslth',
             }, 
             {
                 categoryName: 'Holidays',
