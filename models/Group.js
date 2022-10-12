@@ -41,6 +41,8 @@ const GroupSchema = new mongoose.Schema({
 // customer model method to save the information
 GroupSchema.methods.saveUser = async function( user ){
 
+    console.log(`GroupSchema saveUser`, user);
+
     // Save our new group with the user
     this.users.push(user);
     await this.save();

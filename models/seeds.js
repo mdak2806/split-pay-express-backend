@@ -9,7 +9,6 @@ const Group = require('./Group');
 const Category = require('./Category');
 const UserDebt = require('./UserDebt');
 require('dotenv').config();
-// console.log(process.env);
 
 // Give a path to the Seeds DATA
 mongoose.connect(process.env.MONGODB_CLOUD_URL);
@@ -407,8 +406,8 @@ db.once('open', async () => {
 
 
         // // assoicated the new Groups back to the Users
-        // createdUsers[0].groups.push(createdGroups[0], createdGroups[1]);
-        // await createdUsers[0].save();
+        createdUsers[0].groups.push(createdGroups[0], createdGroups[1]);
+        await createdUsers[0].save();
         // Linking Users to Groups many to many assoications
         await createdGroups[0].saveUser(createdUsers[0], createdUsers[1], createdUsers[2]);
         await createdGroups[1].saveUser(createdUsers[0], createdUsers[2], createdUsers[3],createdUsers[4] );
@@ -429,8 +428,8 @@ db.once('open', async () => {
         console.log('User Debts 2 and 4:', createdUsers[2].userDebts, createdUsers[3].userDebts );
         console.log('First user payments:', createdUsers[0].payments);
 
-        // console.log('User Debts 1 and 4:', createdUsers[1].userDebts, createdUsers[4].userDebts );
-        // console.log('checked added UserDebt', createdUserDebts[0]);
+        console.log('User Debts 1 and 4:', createdUsers[1].userDebts, createdUsers[4].userDebts );
+        console.log('checked added UserDebt', createdUserDebts[0]);
 
 
     process.exit(0) // stay on program
