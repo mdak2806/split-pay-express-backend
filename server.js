@@ -66,7 +66,8 @@ app.get('/', (req, res) => {
   app.get('/users', async (req, res) => {
     try{
         const filter = {}
-        const users = await User.find();
+        // creating a filter for the data to send to front end (no passwords, we are being safe developers , hire me now .... Luke watch we are coming for your job)
+        const users = await User.find({}, {_id: true, name: true, email: true} );
         res.json(users)
 
     } catch( err ){
@@ -265,9 +266,27 @@ app.use( checkAuth() ); // provide req.auth (the User ID from token) to all foll
 // Use the req.auth ID from the middleware above and try to look up a user with it - 
 // if found, attach to req.current_user for all the requests that follow this;
 // if not found, return an error code
+// .populate({
+//   path: 'thirdParty',
+//   populate: { path: 'contacts', model: 'Contact' }
+// })
 app.use( async (req, res, next) => {
     try {
-        const user = await User.findOne({ _id: req.auth._id }).populate(['groups', 'payments'])
+        const user = await User.findOne({ _id: req.auth._id })
+        // .populate(['groups', 'payments', 'groups.users'])
+        .populate([
+          {
+            path: 'groups',
+            populate: 'users'
+          },
+          {
+            path: 'payments',
+            populate: ['users', 'payee', 'payer', 'group']
+          },
+        
+        
+        ])
+
 
         console.log(`Req ${req.path}`, JSON.stringify(user));
 
