@@ -328,7 +328,7 @@ app.use( async (req, res, next) => {
           },
           {
             path: 'payments',
-            populate: ['users', 'payee', 'payer', 'group']
+            populate: ['payee', 'payer', 'group']
           },
         
         
@@ -356,6 +356,13 @@ app.use( async (req, res, next) => {
 app.get('/current_user', (req, res) => {
     res.json( req.current_user );
 });
+
+app.get('/current_user/payments', async(req, res) => {
+  res.json( req.current_user.payments );
+
+ 
+}); // Get/groups
+
 
 // Index Groups page
 app.get('/current_user/groups', async(req, res) => {
@@ -389,6 +396,21 @@ app.post('/postgroupdebt', async(req, res) => {
         console.error('Update error', result, req.body);
         // res.sendStatus( 422 );
         throw new Error('Group ID not found by ID');
+      }
+      // also add this debt to each payers list of payments
+      for (const userId in req.body.payers) { 
+          const amount = req.body.payers[userId];
+          const payment = await Payment.create({
+                paymentAmount: amount,
+                group: req.body.groupId,
+                payee: req.current_user,
+                payer: userId
+          });
+          await User.updateOne(
+             {_id: userId},
+             {$push: { payments: payment}}
+          ); // push and wait
+
       }
       res.json( newGroupDebt )
     } catch( err){

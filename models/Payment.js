@@ -4,23 +4,23 @@ const PaymentSchema = new mongoose.Schema({
     // _id: Schema.Types.ObjectId, 
     paymentAmount: Number,
     receipt: String, 
-    users: [ 
-        {
-            // A group belongs to many users
-            ref: 'User', 
-            type: mongoose.Schema.Types.ObjectId
+    // users: [ 
+    //     {
+    //         // A group belongs to many users
+    //         ref: 'User', 
+    //         type: mongoose.Schema.Types.ObjectId
          
-        }
-    ], 
+    //     }
+    // ], 
     group: {
             ref: 'Group', 
             type: mongoose.Schema.Types.ObjectId
         },
 
-    userDebt: {
-            ref: 'UserDebt',
-            type: mongoose.Schema.Types.ObjectId
-        },
+    // userDebt: {
+    //         ref: 'UserDebt',
+    //         type: mongoose.Schema.Types.ObjectId
+    //     },
     // user to recieve transaction
     payee:{
             ref: 'User', 
