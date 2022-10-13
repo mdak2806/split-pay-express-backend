@@ -117,7 +117,21 @@ app.get('/', (req, res) => {
 // Index Groups page
   app.get('/groups', async(req, res) => {
     try{
-        const groups = await Group.find();
+        const groups = await Group.find().populate([ 'users',
+          { 
+            path: 'groupDebts',
+            populate: ['category', 'payee', 'payers']
+          } 
+
+          // {
+          //   path: 'groups',
+          //   populate: 'users'
+          // },
+          // {
+          //   path: 'groupDebts',
+          //   populate: ['category', 'payee', 'payers']
+          // }
+        ])
         res.json(groups)
 
     } catch( err ){
@@ -128,8 +142,57 @@ app.get('/', (req, res) => {
     }
   }); // Get/groups
 
+  app.get('/groups/:id', async(req, res) => {
+    try{
+        const group = await Group.findOne({
+          _id: req.params.id
+        }).populate([ 'users',
+          { 
+            path: 'groupDebts',
+            populate: ['category', 'payee', 'payers']
+          } 
+
+        ])
+        res.json(group)
+
+    } catch( err ){
+        console.error('Error loading Group by ID:', err, req.params);
+
+        // res.sendStatus(422);
+        res.status(422).json({error: 'Db connection error'})
+    }
+  }); // Get/groups
+
 //   TODO: Group specific show page add req.params
 
+// post a new 
+
+app.post('/postgroup', async(req, res) => {
+  console.log('post:', req.body);
+
+  const createdGroup = new Group({
+    groupName: req.body.name,
+    description: req.body.description, 
+    users: req.body.users
+  });
+  try{
+    const savedGroup = await createdGroup.save();
+
+    const token = jwt.sign(
+
+      {_id: savedGroup._id},
+
+      SERVER_SECRET_KEY,
+
+      {expiresIn: '72h'}
+    );
+    res.json({token, savedGroup})
+  } catch( err){
+    res.sendStatus(500); 
+    console.log('Error signing up:', err)
+  }
+
+}); // Post Group
 
 
 // Index groupDebts
@@ -205,13 +268,8 @@ app.post("/signup", async (req, res)=>{
         
         res.json( { token, savedUser }); 
            
-    // } else {
-    //     // incorrect credentials: user not found ( by email ) or passwords don't 
-    //     // match
-    //     res.status( 401 ).json({ success: false }); // Unauthorised code
-    // }
+ 
   }catch(err){
-      // console.log(err);
       console.log('Error verifying login credentials:', err);
         res.sendStatus(500);
   }
@@ -273,7 +331,6 @@ app.use( checkAuth() ); // provide req.auth (the User ID from token) to all foll
 app.use( async (req, res, next) => {
     try {
         const user = await User.findOne({ _id: req.auth._id })
-        // .populate(['groups', 'payments', 'groups.users'])
         .populate([
           {
             path: 'groups',
@@ -311,62 +368,3 @@ app.get('/current_user', (req, res) => {
 });
 
 
-
-  // app.post('/signup', async (req, res) => {
-  //   console.log('signup: ', req.body);
-  //   res.json(req.body);
-
-  //   const newUser = { 
-  //     name: req.body.name,
-  //     email: req.body.email,
-  //     password: req.body.password
-  //   };
-
-  //   try{
-  //       const user = await User.create({newUser});
-  //       console.log('new User created', user)
-      //   if ( user && bcrypt.compareSync(password, user.passwordDigest) ) {
-
-          // res.json({ success: true })
-          // const token = jwt.sign(
-          //     { _id: savedUser._id },
-          //     SERVER_SECRET_KEY,
-          //     // expiry date/other config:
-          //     { expiresIn: '72h' } // 3 days
-
-          // );
-
-          //     res.json( { token, savedUser }); 
-             
-      // } else {
-      //     // incorrect credentials: user not found ( by email ) or passwords don't 
-      //     // match
-      //     res.status( 401 ).json({ success: false }); // Unauthorised code
-    //   // }
-    // } // try 
-    // catch (err) {
-
-    //     console.log('Error verifying login credentials:', err);
-    //     res.sendStatus(500); // Low-level error
-    
-    // } // catch
-// /////////////// Deleted GROUP DEBT MODEL
-  // app.get('/groupDebts', async(req, res) => {
-  //   try{
-  //       const groupDebts = await GroupDebt.find();
-  //       res.json(groupDebts)
-
-  //   } catch( err ){
-  //       console.error('Error loading all GroupDebt', err);
-
-  //       // res.sendStatus(422);
-  //       res.status(422).json({error: 'Db connection error'})
-  //   }
-  // }); // Get/groupDebts
-
-  // At the end of the file, we add a new route for Login
-// app.post('/login', (req, res) => {
-//   // console.log('login:', req.body);
-//   // res.json( req.body ); // just for debugging
-
-// });
