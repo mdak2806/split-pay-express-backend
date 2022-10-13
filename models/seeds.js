@@ -279,11 +279,19 @@ db.once('open', async () => {
                     // createdUsers[1], createdUsers[2]
                 ], 
                 groupDebts: {
-                    totalAmount: 180, 
+                    amount: 180, 
                     description: 'Split of household expense electrical bills', 
                     category: createdCaregories[4], 
                     payee:createdUsers[0],
-                    payer: [ createdUsers[1],createdUsers[2]],  
+                    payer: [   {
+                        share: 60, 
+                        users: createdUsers[1]
+                    },
+                    {
+                        share: 60, 
+                        users: createdUsers[2]
+                    },
+                   ],  
                 }
             }, // group 0
 
@@ -298,38 +306,60 @@ db.once('open', async () => {
                     // createdUsers[4],
                 ], 
                 groupDebts: [{
-                    totalAmount: 4000, 
+                    amount: 4000, 
                     description: 'Split of household expense rent bills', 
                     category: createdCaregories[7], 
                     payee:createdUsers[2],
                     payers: [
-                         createdUsers[0],
-                         createdUsers[3],createdUsers[4]
+                        {
+                            share: 1000, 
+                            users: createdUsers[0]
+                        },
+                        {
+                            share: 1000, 
+                            users: createdUsers[3]
+                        },
+                        {
+                            share: 1000, 
+                            users: createdUsers[4]
+                        }
                         ], 
 
-                },
-                {
-                    totalAmount: 2000, 
+                    }
+                ]
+            },
+            {
+                    amount: 2000, 
                     description: 'Split of holiday travel', 
                     category: createdCaregories[7], 
                     payee: createdUsers[3],
                     payers: [
-                         createdUsers[1],createdUsers[2], createdUsers[4]
+                        {
+                            share: 500, 
+                            users: createdUsers[1]
+                        },
+                        {
+                            share: 500, 
+                            users: createdUsers[2]
+                        },
+                        {
+                            share: 500, 
+                            users: createdUsers[4]
+                        }
                         ]
-                },
-            ] // Groups debts
-            },// group 2
-            {
-                groupName: 'Social',
-                description: 'Eating out spliting',
-                numberUsers: 4,
-                users: [
-                    // createdUsers[1],
-                    // createdUsers[2],
-                    // createdUsers[3],
-                    // createdUsers[4],
-                ]
-            }, 
+            },
+         
+            //     amount: 100,
+            //     groupName: 'Social',
+            //     description: 'Eating out spliting',
+            //     numberUsers: 4,
+            //     users: [
+            //         // createdUsers[1],
+            //         // createdUsers[2],
+            //         // createdUsers[3],
+            //         // createdUsers[4],
+            //     ]
+            // }, 
 
         ]);
 
@@ -379,26 +409,61 @@ db.once('open', async () => {
                 payer: createdUsers[1],
             }, 
             {
+                paymentAmount: 60, 
+                receipt: 'X01020202', 
+                group: createdGroups[0],
+                payee: createdUsers[0], 
+                payer: createdUsers[2],
+            }, 
+            {
                 paymentAmount: 1000,
                 receipt: 'Y00020303',
-                group: createdGroups[2],
+                group: createdGroups[1],
                 payee: createdUsers[2],
                 payer: createdUsers[0]
             }, 
             {
                 paymentAmount: 1000,
                 receipt: 'Y00020303',
-                group:createdGroups[2], 
+                group:createdGroups[1], 
                 payee: createdUsers[2],
                 payer: createdUsers[3]
             }, 
             {
-                paymentAmount: 50,
+                paymentAmount: 1000,
+                receipt: 'Y00020303',
+                group:createdGroups[1], 
+                payee: createdUsers[2],
+                payer: createdUsers[4]
+            }, 
+            {
+                paymentAmount: 1200,
                 receipt: 'HUDKJ093298',
-                group: createdUserDebts[0],
-                payee: createdUsers[1],
+                group: createdUserDebts[2],
+                payee: createdUsers[3],
                 payer: createdUsers[4]
             },
+            {
+                paymentAmount: 1200,
+                receipt: 'HUDKJ093298',
+                group: createdUserDebts[2],
+                payee: createdUsers[3],
+                payer: createdUsers[2]
+            },
+            // {
+            //     paymentAmount: 50,
+            //     receipt: 'HUDKJ093298',
+            //     group: createdUserDebts[0],
+            //     payee: createdUsers[1],
+            //     payer: createdUsers[4]
+            // },
+            // {
+            //     paymentAmount: 50,
+            //     receipt: 'HUDKJ093298',
+            //     group: createdUserDebts[0],
+            //     payee: createdUsers[1],
+            //     payer: createdUsers[4]
+            // },
 
         ]);
 
@@ -416,10 +481,11 @@ db.once('open', async () => {
         await createdGroups[1].saveUser(createdUsers[2]);
         await createdGroups[1].saveUser(createdUsers[3]);
         await createdGroups[1].saveUser(createdUsers[4]);
-        await createdGroups[2].saveUser(createdUsers[1]);
         await createdGroups[2].saveUser(createdUsers[2]);
         await createdGroups[2].saveUser(createdUsers[3]);
         await createdGroups[2].saveUser(createdUsers[4]);
+        await createdGroups[2].saveUser(createdUsers[1]);
+
 
         // Linking User Debts to Users (Many to Many assoications)
         await createdUserDebts[0].saveUser(createdUsers[1]);
@@ -430,11 +496,11 @@ db.once('open', async () => {
         await createdPayments[0].saveUser(createdUsers[0]);
         await createdPayments[0].saveUser(createdUsers[1]);
         await createdPayments[1].saveUser(createdUsers[2]);
-        await createdPayments[1].saveUser(createdUsers[1]);
+        await createdPayments[1].saveUser(createdUsers[0]);
         await createdPayments[2].saveUser(createdUsers[2]);
-        await createdPayments[2].saveUser(createdUsers[3]);
-        await createdPayments[3].saveUser(createdUsers[1]);
-        await createdPayments[3].saveUser(createdUsers[4]);
+        await createdPayments[2].saveUser(createdUsers[0]);
+        await createdPayments[3].saveUser(createdUsers[2]);
+        await createdPayments[3].saveUser(createdUsers[3]);
 
         console.log('first users groups', createdUsers[0].groups, createdUsers[1].groups );
         console.log('checked added first group', createdGroups[0]);

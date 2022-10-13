@@ -150,7 +150,7 @@ app.get('/', (req, res) => {
         }).populate([ 'users',
           { 
             path: 'groupDebts',
-            populate: ['category', 'payee', 'payers']
+            populate: ['category', 'payee', 'payers', 'totalAmount']
           } 
 
         ])
@@ -176,22 +176,9 @@ app.post('/postgroup', async(req, res) => {
     description: req.body.description, 
     users: req.body.users
   });
-  try{
+
     const savedGroup = await createdGroup.save();
-
-    const token = jwt.sign(
-
-      {_id: savedGroup._id},
-
-      SERVER_SECRET_KEY,
-
-      {expiresIn: '72h'}
-    );
-    res.json({token, savedGroup})
-  } catch( err){
-    res.sendStatus(500); 
-    console.log('Error signing up:', err)
-  }
+    res.json(await savedGroup.populate('users'))
 
 }); // Post Group
 
@@ -368,4 +355,10 @@ app.get('/current_user', (req, res) => {
     res.json( req.current_user );
 });
 
+// Index Groups page
+app.get('/current_user/groups', async(req, res) => {
+  res.json( req.current_user.groups );
+
+ 
+}); // Get/groups
 
