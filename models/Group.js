@@ -29,8 +29,11 @@ const GroupSchema = new mongoose.Schema({
             type: mongoose.Schema.Types.ObjectId
         },
         payers:[{
-            ref: 'User', 
-            type: mongoose.Schema.Types.ObjectId 
+            share: Number,
+            user:{
+                ref: 'User', 
+                type: mongoose.Schema.Types.ObjectId 
+            }
         }]
 
 
