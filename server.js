@@ -182,6 +182,8 @@ app.post('/postgroup', async(req, res) => {
 }); // Post Group
 
 
+
+
 // Index groupDebts
 // TODO: Show page for User Debts
 
@@ -361,3 +363,36 @@ app.get('/current_user/groups', async(req, res) => {
  
 }); // Get/groups
 
+app.post('/postgroupdebt', async(req, res) => {
+  console.log('post:', req.body);
+
+  const newGroupDebt =  {
+    amount: req.body.totalAmount,
+    description: req.body.description,
+    category: req.body.category,
+    payee: req.current_user, 
+    payers: Object.entries(req.body.payers).map(e => ({share: e[1], user: e[0]})) 
+  };
+  console.log('new groupDebt', newGroupDebt);
+    try{
+      const result = await Group.updateOne(
+        {_id: req.body.groupId},
+        {
+          $push : {
+            groupDebts: newGroupDebt
+          }
+        }
+      )
+      console.log('result of updateOne: ', result)
+      if(result === null || undefined){
+        console.error('Update error', result, req.body);
+        // res.sendStatus( 422 );
+        throw new Error('Group ID not found by ID');
+      }
+      res.json( newGroupDebt )
+    } catch( err){
+      console.error('error updating group', err)
+      res.sendStatus(422)
+    }
+
+}); // Update Group
