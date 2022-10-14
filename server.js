@@ -67,7 +67,7 @@ app.get('/', (req, res) => {
   app.get('/users', async (req, res) => {
     try{
         const filter = {}
-        // creating a filter for the data to send to front end (no passwords, we are being safe developers , hire me now .... Luke watch we are coming for your job)
+        // creating a filter for the data to send to front end
         const users = await User.find({}, {_id: true, name: true, email: true} );
         res.json(users)
 
@@ -123,15 +123,6 @@ app.get('/', (req, res) => {
             path: 'groupDebts',
             populate: ['category', 'payee', 'payers']
           } 
-
-          // {
-          //   path: 'groups',
-          //   populate: 'users'
-          // },
-          // {
-          //   path: 'groupDebts',
-          //   populate: ['category', 'payee', 'payers']
-          // }
         ])
         res.json(groups)
 
@@ -166,38 +157,13 @@ app.get('/', (req, res) => {
 
 //   TODO: Group specific show page add req.params
 
-// post a new 
 
-app.post('/postgroup', async(req, res) => {
-  console.log('post:', req.body);
-
-  const createdGroup = new Group({
-    groupName: req.body.name,
-    description: req.body.description, 
-    users: req.body.users
-  });
-
-    const savedGroup = await createdGroup.save();
-    res.json(await savedGroup.populate('users'))
-
-}); // Post Group
 
 
 
 
 // Index groupDebts
-// TODO: Show page for User Debts
 
-
-// TODO: EDIT page
-// TODO: Delete page - once posted/ complete
-
-
-
-//   Index UserDebts page
-// TODO: Show page for User Debts
-// TODO: EDIT page
-// TODO: Delete page - once posted/ complete
 
   app.get('/userDebts', async(req, res) => {
     try{
@@ -216,7 +182,7 @@ app.post('/postgroup', async(req, res) => {
 
   app.get('/payment', async(req, res) => {
     try{
-        const payment = await Payment.find().populate(['group', 'payee', 'payer', 'users']);
+        const payment = await Payment.find().populate(['group', 'payee', 'payer']);
         res.json(payment)
 
     } catch( err ){
@@ -227,10 +193,6 @@ app.post('/postgroup', async(req, res) => {
     }
   }); // Get/payment
 
-
-//   TODO: Payment show page
-
-// TODO: Payment Post page
 
 // SIGNUP
 
@@ -308,6 +270,8 @@ app.post('/login', async (req, res) => {
 
 
 
+
+
 // ** Routes below this line only work for authenticated users - move the required ones under here.
 app.use( checkAuth() ); // provide req.auth (the User ID from token) to all following routes
 // Custom middleware, defined inline:
@@ -363,13 +327,42 @@ app.get('/current_user/payments', async(req, res) => {
  
 }); // Get/groups
 
-
 // Index Groups page
 app.get('/current_user/groups', async(req, res) => {
   res.json( req.current_user.groups );
 
  
 }); // Get/groups
+
+
+app.post('/pay/:id', async(req, res) => {
+  console.log('pay:', req.params);
+
+  const result = await Payment.findOneAndUpdate(
+    { _id: req.params.id },
+    { receipt: Date.now() },
+    { new: true }
+  );
+  res.json(await result.populate(['payee', 'payer']))
+
+
+});
+
+// post a new 
+
+app.post('/postgroup', async(req, res) => {
+  console.log('post:', req.body);
+
+  const createdGroup = new Group({
+    groupName: req.body.name,
+    description: req.body.description, 
+    users: req.body.users
+  });
+
+    const savedGroup = await createdGroup.save();
+    res.json(await savedGroup.populate('users'))
+
+}); // Post Group
 
 app.post('/postgroupdebt', async(req, res) => {
   console.log('post:', req.body);
