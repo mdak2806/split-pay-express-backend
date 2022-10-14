@@ -5,7 +5,11 @@ const GroupSchema = new mongoose.Schema({
     // _id: Schema.Types.ObjectId, 
     groupName: String, 
     description: String, 
-    numberUsers: Number, 
+    numberUsers: Number,
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }, 
     users: [ 
         {
             // A group belongs to many users
@@ -18,7 +22,12 @@ const GroupSchema = new mongoose.Schema({
     groupDebts: [{
         amount: Number,
         description: String,
-        receipt: String, 
+        receipt: String,
+        
+        debtDate: {
+            type: Date,
+            default: Date.now
+        },  
 
         category: {
             ref: 'Category', 

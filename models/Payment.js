@@ -4,6 +4,10 @@ const PaymentSchema = new mongoose.Schema({
     // _id: Schema.Types.ObjectId, 
     paymentAmount: Number,
     receipt: String, 
+    createdAt: {
+        type: Date,
+        default: Date.now
+    }, 
     users: [ 
         {
             // A group belongs to many users
@@ -16,12 +20,6 @@ const PaymentSchema = new mongoose.Schema({
             ref: 'Group', 
             type: mongoose.Schema.Types.ObjectId
         },
-
-    userDebt: {
-            ref: 'UserDebt',
-            type: mongoose.Schema.Types.ObjectId
-        },
-    // user to recieve transaction
     payee:{
             ref: 'User', 
             type: mongoose.Schema.Types.ObjectId
@@ -35,7 +33,7 @@ const PaymentSchema = new mongoose.Schema({
 
 });
 
-// // customer model method to save the information
+// customer model method to save the information
 PaymentSchema.methods.saveUser = async function( user ){
 
     // Save our new payment with the user
@@ -53,7 +51,4 @@ PaymentSchema.methods.saveUser = async function( user ){
 }
 
 
-// PaymentSchema.belongsTo('UserDebt')
-// PaymentSchema.hasMany('User')
-// PaymentSchema.belongsTo('GroupDebt')
 module.exports = mongoose.model('Payment', PaymentSchema)
