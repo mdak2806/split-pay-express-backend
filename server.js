@@ -299,7 +299,7 @@ app.use( async (req, res, next) => {
         ])
 
 
-        console.log(`Req ${req.path}`, JSON.stringify(user));
+        // console.log(`Req ${req.path}`, JSON.stringify(user));
 
         if( user === null ){
             res.sendStatus( 401 ); // invalid/stale token
@@ -360,6 +360,8 @@ app.post('/postgroup', async(req, res) => {
   });
 
     const savedGroup = await createdGroup.save();
+    console.log(savedGroup);
+    await savedGroup.saveUser(req.current_user);
     res.json(await savedGroup.populate('users'))
 
 }); // Post Group
