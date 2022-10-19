@@ -475,11 +475,11 @@ db.once('open', async () => {
         await createdGroups[1].saveUser(createdUsers[2]);
         await createdGroups[1].saveUser(createdUsers[3]);
         await createdGroups[1].saveUser(createdUsers[4]);
+        
         await createdGroups[2].saveUser(createdUsers[2]);
         await createdGroups[2].saveUser(createdUsers[3]);
         await createdGroups[2].saveUser(createdUsers[4]);
         await createdGroups[2].saveUser(createdUsers[1]);
-        await createdGroups[2].saveUser(createdUsers[2]);
 
         await createdGroups[3].saveUser(createdUsers[4]);
         await createdGroups[3].saveUser(createdUsers[2]);
