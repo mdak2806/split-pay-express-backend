@@ -42,8 +42,6 @@ PaymentSchema.methods.saveUser = async function( user ){
 
     user.payments.push(this);
 
-    console.log(user);
-    console.log(payment);
 
     await user.save();
 
