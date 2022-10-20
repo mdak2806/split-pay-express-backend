@@ -392,10 +392,12 @@ app.post('/postgroupdebt', async(req, res) => {
         throw new Error('Group ID not found by ID');
       }
       // also add this debt to each payers list of payments
+      // TODO: changed payers
       for (const userId in req.body.payers) { 
           const amount = req.body.payers[userId];
           const payment = await Payment.create({
                 paymentAmount: amount,
+                users: req.body.users,
                 group: req.body.groupId,
                 payee: req.current_user,
                 payer: userId
@@ -403,7 +405,12 @@ app.post('/postgroupdebt', async(req, res) => {
           await User.updateOne(
              {_id: userId},
              {$push: { payments: payment}}
-          ); // push and wait
+          );
+          // TODO: ADDED an extra update for current user.... Fixed posting issue
+          await User.updateOne(
+            {_id: req.current_user},
+            {$push: { payments: payment}}
+         );  // push and wait
 
       }
       res.json( newGroupDebt )
@@ -412,4 +419,5 @@ app.post('/postgroupdebt', async(req, res) => {
       res.sendStatus(422)
     }
 
+    
 }); // Update Group
