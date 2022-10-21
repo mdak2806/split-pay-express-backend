@@ -47,7 +47,7 @@ const jwtAuthenticate = require('express-jwt');
 
 const checkAuth = () => {
   return jwtAuthenticate.expressjwt({ 
-      secret: process.env.SERVER_SECRET_KEY, // check token hasn't been tampered with
+      secret: SERVER_SECRET_KEY, // check token hasn't been tampered with
       algorithms: ['HS256'],
       requestProperty: 'auth' // gives us 'req.auth'
   });
