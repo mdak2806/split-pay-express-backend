@@ -81,3 +81,14 @@ const UserSchema= new mongoose.Schema({
 // UserSchema.hasMany('Payment');
 
 module.exports = mongoose.model('User', UserSchema)
+
+
+// "repository": {
+//   "type": "git",
+//   "url": "git+https://github.com/mdak2806/split-pay-app-mongoose-backend.git"
+// },
+// "bugs": {
+//   "url": "https://github.com/mdak2806/split-pay-app-mongoose-backend/issues"
+// },
+// "homepage": "https://github.com/mdak2806/split-pay-app-mongoose-backend#readme",
+// "description": ""
