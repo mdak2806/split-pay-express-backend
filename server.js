@@ -3,6 +3,14 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 
+// require dotenv library
+require('dotenv').config();
+
+// call the dotenv variables
+const SERVER_SECRET_KEY = process.env.SERVER_SECRET_KEY;
+// const MONGODB_CLOUD_URL = process.env.MONGODB_CLOUD_URL;
+
+// require cos
 const cors = require('cors');
 // Use this CORS package as part of the Express
 // set the CORS allow header for us on every request, for AJAX requests
@@ -28,8 +36,9 @@ const UserDebt= require('./models/UserDebt');
 // const GroupDebt = require('./models/GroupDebt');
 const Group = require('./models/Group');
 
-require('dotenv').config();
 
+
+// TODO: might be able to remove the process.env below 
 mongoose.connect(process.env.MONGODB_CLOUD_URL);
 const db = mongoose.connection;
 
@@ -45,7 +54,26 @@ const jwt    = require('jsonwebtoken');
 const jwtAuthenticate = require('express-jwt');
 
 
+// Refresh token setup
+const refreshTokenList = {};
+const generateRefreshToken = (userId) => {
+    const refreshToken = jwt.sign({userId}, SERVER_SECRET_KEY, {expiresIn: '7d'});
+    refreshTokenList[refreshToken] = userId;
+    return refreshToken;
+}
 
+// check refresh token is still valid
+const checkRefreshToken = (refreshToken) => {
+  if(refreshTokenList[refreshToken]){
+    const userId = refreshTokenList[refreshToken];
+    const newToken = jwt.sign({userId}, SERVER_SECRET_KEY, {expiresIn: '72h'});
+    return newToken
+  }
+  return null;
+};
+
+
+// TODO: Might be able to remove the process.env
 const checkAuth = () => {
   return jwtAuthenticate.expressjwt({ 
       secret: process.env.SERVER_SECRET_KEY, // check token hasn't been tampered with
@@ -218,7 +246,7 @@ app.post("/signup", async (req, res)=>{
       console.log("saved users", savedUser)
       // if ( savedUser && bcrypt.compareSync(req.body.password, savedUser.passwordDigest) ) {
 
-        // res.json({ success: true })
+        //generate token and refresh token
         const token = jwt.sign(
             { _id: savedUser._id },
             SERVER_SECRET_KEY,
@@ -226,9 +254,14 @@ app.post("/signup", async (req, res)=>{
             { expiresIn: '72h' } // 3 days
 
         );
-        console.log("token", token)
-        
-        res.json( { token, savedUser }); 
+
+        const refreshToken = generateRefreshToken(savedUser._id);
+        console.log('token', token);
+        res.json({token, refreshToken});
+
+        // TODO: Below changed:
+        // console.log("token", token)
+        // res.json( { token, savedUser }); 
            
  
   }catch(err){
@@ -262,7 +295,12 @@ app.post('/login', async (req, res) => {
 
             );
 
-                res.json( { token }); 
+            const refreshToken = generateRefreshToken(user._id);
+            res.json({token, refreshToken});
+
+            // TODO: below removed
+
+                // res.json( { token }); 
                
         } else {
             // incorrect credentials: user not found ( by email ) or passwords don't 
@@ -277,9 +315,6 @@ app.post('/login', async (req, res) => {
         
     }
 }) //login
-
-
-
 
 
 // ** Routes below this line only work for authenticated users - move the required ones under here.
