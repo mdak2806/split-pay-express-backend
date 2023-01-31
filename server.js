@@ -18,7 +18,8 @@ app.listen(PORT, () => {
   console.log(`Server listening at http://localhost:${PORT} ...`);
 });
 
-// Mongoose DB initialisation
+// ******  Mongoose DB initialisation ****************** //
+
 const mongoose = require('mongoose');
 const User = require('./models/User');
 const Category = require('./models/Category');
@@ -38,7 +39,7 @@ db.on('error', err => {
 
 });
 
-// Authentication
+// ************ Authentication *********************** //
 const bcrypt = require('bcrypt');
 const jwt    = require('jsonwebtoken');
 const jwtAuthenticate = require('express-jwt');
@@ -53,7 +54,17 @@ const checkAuth = () => {
   });
 }; // checkAuth
 
+
+// bcrypt - encrypt plain text passwords, verify correct password
+//
+// jwt - create tokens to send to frontend, encoding user ID in tamper proof format
+//
+// express-jwt - 'Express' middleware, like plugin that Express can use to provide extra info to route handler callbacks ( attaching something to first 'req' argument, returning req.auth) - like 'knock' gem in Rails
+
+
 // const SERVER_SECRET_KEY = process.env.SERVER_SECRET_KEY;
+
+// ************** API Routes ****************** // 
 
 // Split Pay Routes
 app.get('/', (req, res) => {
